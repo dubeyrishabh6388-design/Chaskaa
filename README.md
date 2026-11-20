@@ -1,0 +1,39 @@
+# Chaskaa — Complete Web Platform
+
+React + Vite + Tailwind implementation built from the uploaded screenshots/blueprints. Same wine-maroon and warm-red theme across all three workspaces. **No rider module is included.**
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Open **http://localhost:5173** — a portal links to a single unified login page (`/login`). On that page, click the big demo ID button (unlocks all workspaces) or any role card to enter instantly. Manual sign-in works too: select account type → any email/password → MFA code `123456`. Direct URLs without a session redirect to `/login?next=...`.
+
+A portal links to all three apps:
+
+| Workspace | URL | What it covers |
+| --- | --- | --- |
+| Admin Console | `/dashboard` | Dashboard, vendors, users, tiffin, orders, subscriptions, payments, marketing, support, reports, roles, settings |
+| Customer App | `/customer` | Login/OTP, home, tiffin plans + detail, restaurants + menu, cart, checkout, order success, tracking, orders, subscriptions, wallet, profile |
+| Merchant Panel | `/vendor` | Dashboard, live order board, tiffin operations, menu manager, offers, earnings/settlements, ratings/reviews, staff/support, outlet settings |
+
+`/customer/login` also redirects to the unified `/login?role=customer`. A shared `LogoutButton` puts a clean sign-out control in the header, sidebar and footer of every page in all three workspaces (responsive: icon on mobile, labelled on larger screens).
+
+## Theme
+
+Wine/maroon sidebar (`#6a1222` family), warm-red primary (`#d93025`), light `#fbf8f7` surfaces — defined in `tailwind.config.js` and `src/index.css`, shared by all three workspaces.
+
+## Notes
+
+- All data is realistic mock data in `src/data/mockData.js` and `src/data/customerData.js`.
+- `src/store/AppContext.jsx` holds client-side actions and persists edits in localStorage.
+- This is the admin/customer/merchant web platform from the blueprints; the rider app screens were intentionally excluded.
+
+## Production build
+
+```bash
+npm run build
+npm run preview
+```

@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --wine: #6a1222;
+  --chaskaa: #d93025;
+}
+
+* { -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  @apply bg-[#fbf8f7] text-[#2b1d20] antialiased;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { @apply rounded-full bg-chaskaa-200; }
+::-webkit-scrollbar-thumb:hover { @apply bg-chaskaa-300; }
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-[#f0e6e6] bg-white shadow-card;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all duration-200 active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-chaskaa-600 text-white hover:bg-chaskaa-700 hover:shadow-float;
+  }
+  .btn-soft {
+    @apply btn bg-chaskaa-50 text-chaskaa-700 hover:bg-chaskaa-100;
+  }
+  .btn-ghost {
+    @apply btn border border-[#eadddd] bg-white text-[#4a3438] hover:bg-[#fdf6f5];
+  }
+  .input {
+    @apply w-full rounded-xl border border-[#eadddd] bg-white px-3.5 py-2.5 text-sm outline-none transition placeholder:text-[#a99a9c] focus:border-chaskaa-400 focus:ring-4 focus:ring-chaskaa-100;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[#8a7477];
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold;
+  }
+  .table-head {
+    @apply sticky top-0 z-10 bg-[#fdf8f8] px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-[#8a7477];
+  }
+  .table-cell {
+    @apply px-4 py-3 text-sm text-[#4a3438];
+  }
+}
+
+.fade-in { animation: fadeIn .35s ease both; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bar-grow { animation: barGrow .8s cubic-bezier(.2,.8,.2,1) both; transform-origin: bottom; }
+@keyframes barGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.pulse-dot::after {
+  content: '';
+  @apply absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-60;
+}

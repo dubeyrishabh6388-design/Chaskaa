@@ -1,0 +1,40 @@
+export const demoAccounts = [
+  {
+    role: 'admin',
+    name: 'Akash Rai',
+    title: 'Super Admin',
+    email: 'akash@chaskaa.in',
+    password: 'chaskaa123',
+    home: '/dashboard',
+    label: 'Admin Console',
+    description: 'Dashboard, vendors, orders, tiffin, payments, reports & settings',
+    icon: 'LayoutDashboard',
+    tone: 'from-wine-800 to-chaskaa-700',
+  },
+  {
+    role: 'customer',
+    name: 'Akash Rai',
+    title: 'Customer',
+    email: 'akash.rai@example.com',
+    password: 'chaskaa123',
+    home: '/customer',
+    label: 'Customer App',
+    description: 'Food delivery, tiffin plans, cart, checkout, tracking & wallet',
+    icon: 'ShoppingBag',
+    tone: 'from-chaskaa-600 to-chaskaa-800',
+  },
+  {
+    role: 'merchant',
+    name: 'Bhojan Homes',
+    title: 'Merchant',
+    email: 'owner@bhojanhomes.in',
+    password: 'chaskaa123',
+    home: '/vendor',
+    label: 'Merchant Panel',
+    description: 'Kitchen order board, menu manager, tiffin operations & earnings',
+    icon: 'Store',
+    tone: 'from-amber-600 to-chaskaa-700',
+  },
+];
+
+export const accountByRole = (role) => demoAccounts.find((a) => a.role === role) || demoAccounts[0];
