@@ -86,7 +86,7 @@ export function dishImage(name = '', category = '') {
 
 export const restaurantImages = {
   'bhojan-homes': '/img/rest-indian.jpg',
-  'rasoi-ghar': '/img/rest-north-indian.png',
+  'rasoi-ghar': '/img/north-indian-thali.jpg',
   'tiffin-express': '/img/rest-tiffin.jpg',
   'foodies-hub': '/img/rest-fastfood.jpg',
 };
@@ -95,7 +95,7 @@ export const restaurantImage = (r) => restaurantImages[r?.id] || '/img/rest-indi
 
 export const categoryImages = {
   Thali: '/img/veg-thali.jpeg',
-  'North Indian': '/img/rest-north-indian.png',
+  'North Indian': '/img/north-indian-thali.jpg',
   Chinese: '/img/noodles.jpg',
   'Fast Food': '/img/rest-fastfood.jpg',
   Beverages: '/img/masala-lemonade.jpg',
@@ -129,7 +129,7 @@ export function vendorImage(name = '') {
   if (n.includes('dal')) return '/img/dal-tadka.jpg';
   if (n.includes('green bowl')) return '/img/mixed-veg-bowl.jpg';
   if (n.includes('corporate')) return '/img/rest-indian.jpg';
-  if (n.includes('spice route')) return '/img/rest-north-indian.png';
+  if (n.includes('spice route')) return '/img/north-indian-thali.jpg';
   if (n.includes('tiffin') || n.includes('ghar ka khana')) return '/img/rest-tiffin.jpg';
   return '/img/rest-indian.jpg';
 }
