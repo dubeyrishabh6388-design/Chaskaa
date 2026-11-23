@@ -29,7 +29,7 @@ export function VendorLayout() {
   const { toast } = useApp();
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
-    <div className="min-h-screen bg-[#fbf8f7] lg:flex">
+    <div className="min-h-screen bg-[#fef5f8] lg:flex">
       {mobileOpen && <div className="fixed inset-0 z-40 bg-black/40 lg:hidden" onClick={() => setMobileOpen(false)} />}
       <aside className={`fixed inset-y-0 left-0 z-50 flex w-[248px] flex-col bg-sidebar-wine text-white transition-transform lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center gap-2.5 border-b border-white/10 px-5 py-5">
@@ -47,7 +47,7 @@ export function VendorLayout() {
               <p className="mb-1.5 px-3 text-[9px] font-bold uppercase tracking-[.18em] text-white/40">{g.label}</p>
               {g.items.map((n) => (
                 <NavLink key={n.to} to={n.to} end={n.end} onClick={() => setMobileOpen(false)}
-                  className={({ isActive }) => `mb-0.5 flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${isActive ? 'bg-white text-chaskaa-700 shadow-sm' : 'text-white/75 hover:bg-white/10 hover:text-white'}`}>
+                  className={({ isActive }) => `mb-0.5 flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold transition ${isActive ? 'bg-active-nav text-white shadow-sm' : 'text-white/75 hover:bg-white/10 hover:text-white'}`}>
                   <Icon name={n.icon} size={16} /> {n.label}
                 </NavLink>
               ))}

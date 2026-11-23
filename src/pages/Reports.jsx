@@ -29,12 +29,12 @@ export default function Reports() {
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={revenueSeries} margin={{ left: -18, right: 8 }}>
-                <defs><linearGradient id="gmv" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#ec4b3f" stopOpacity={0.35} /><stop offset="100%" stopColor="#ec4b3f" stopOpacity={0.02} /></linearGradient></defs>
+                <defs><linearGradient id="gmv" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#b00528" stopOpacity={0.35} /><stop offset="100%" stopColor="#b00528" stopOpacity={0.02} /></linearGradient></defs>
                 <CartesianGrid strokeDasharray="4 4" vertical={false} stroke="#f2e9e9" />
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9b888b' }} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9b888b' }} />
                 <Tooltip contentStyle={tooltipStyle} />
-                <Area type="monotone" dataKey="gmv" name="GMV (₹ lakh)" stroke="#ec4b3f" strokeWidth={2.5} fill="url(#gmv)" />
+                <Area type="monotone" dataKey="gmv" name="GMV (₹ lakh)" stroke="#b00528" strokeWidth={2.5} fill="url(#gmv)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -61,7 +61,7 @@ export default function Reports() {
                 <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#9b888b' }} />
                 <Tooltip contentStyle={tooltipStyle} /><Legend wrapperStyle={{ fontSize: 11 }} />
                 <Bar dataKey="gmv" name="GMV" fill="#f6b73c" radius={[4, 4, 0, 0]} maxBarSize={20} />
-                <Bar dataKey="revenue" name="Net revenue" fill="#ec4b3f" radius={[4, 4, 0, 0]} maxBarSize={20} />
+                <Bar dataKey="revenue" name="Net revenue" fill="#b00528" radius={[4, 4, 0, 0]} maxBarSize={20} />
               </BarChart>
             </ResponsiveContainer>
           </div>

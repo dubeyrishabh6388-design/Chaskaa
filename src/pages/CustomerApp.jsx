@@ -137,12 +137,12 @@ export function CustomerHome() {
 function PlanCard({ plan }) {
   const navigate = useNavigate();
   return (
-    <button onClick={() => navigate(`/customer/plans/${plan.id}`)} className="group rounded-2xl border border-[#f1e0dc] bg-white p-4 text-left shadow-card transition hover:-translate-y-0.5 hover:border-chaskaa-300 hover:shadow-float">
+    <button onClick={() => navigate(`/customer/plans/${plan.id}`)} className="group rounded-2xl border border-[#f6e4ea] bg-white p-4 text-left shadow-card transition hover:-translate-y-0.5 hover:border-chaskaa-300 hover:shadow-float">
       <div className="flex items-start justify-between"><span className={`chip ${plan.segment === 'Student' ? 'bg-amber-50 text-amber-700' : 'bg-violet-50 text-violet-700'}`}>{plan.segment}</span><span className="chip bg-chaskaa-50 text-chaskaa-700">{plan.badge}</span></div>
       <p className="mt-4 text-base font-extrabold text-[#2b1d20]">{plan.name}</p>
       <p className="text-xs text-[#8a7477]">{plan.duration} · {plan.meals}</p>
       <p className="mt-3 text-2xl font-extrabold text-chaskaa-600">₹{plan.price}<span className="text-[11px] font-semibold text-[#8a7477]"> {plan.unit}</span></p>
-      <div className="mt-3 flex flex-wrap gap-1.5">{plan.highlights.slice(0, 2).map((h) => <span key={h} className="rounded-full bg-[#fdf4f2] px-2 py-1 text-[10px] font-semibold text-[#8a7477]">{h}</span>)}</div>
+      <div className="mt-3 flex flex-wrap gap-1.5">{plan.highlights.slice(0, 2).map((h) => <span key={h} className="rounded-full bg-[#fdf2f4] px-2 py-1 text-[10px] font-semibold text-[#8a7477]">{h}</span>)}</div>
       <span className="mt-4 inline-flex items-center gap-1 text-xs font-extrabold text-chaskaa-600 group-hover:gap-2">View details <Icon name="ArrowRight" size={13} /></span>
     </button>
   );
@@ -151,7 +151,7 @@ function PlanCard({ plan }) {
 function RestaurantCard({ r }) {
   const navigate = useNavigate();
   return (
-    <button onClick={() => navigate(`/customer/restaurants/${r.id}`)} className="overflow-hidden rounded-2xl border border-[#f1e0dc] bg-white text-left shadow-card transition hover:-translate-y-0.5 hover:shadow-float">
+    <button onClick={() => navigate(`/customer/restaurants/${r.id}`)} className="overflow-hidden rounded-2xl border border-[#f6e4ea] bg-white text-left shadow-card transition hover:-translate-y-0.5 hover:shadow-float">
       <div className={`relative flex h-32 items-center justify-center bg-gradient-to-br ${r.color} text-white`}>
         <span className="text-4xl font-black opacity-90">{r.logo}</span>
         <span className="absolute bottom-2 right-2 rounded-lg bg-white/95 px-2 py-1 text-[10px] font-extrabold text-[#2b1d20]">{r.eta}</span>
@@ -179,8 +179,8 @@ export function TiffinService() {
       </div>
       <div className="mb-6 grid grid-cols-2 gap-3">
         {[['Student', 'Affordable & Nutritious Meal Plans', 'LunchBox'], ['Corporate', 'Premium & Hygienic Meal Plans', 'Store']].map(([name, desc, icon]) => (
-          <button key={name} onClick={() => setSegment(name)} className={`rounded-2xl border-2 p-4 text-left transition ${segment === name ? 'border-chaskaa-500 bg-chaskaa-50 shadow-card' : 'border-[#f1e0dc] bg-white hover:border-chaskaa-200'}`}>
-            <span className={`grid h-10 w-10 place-items-center rounded-xl ${segment === name ? 'bg-chaskaa-600 text-white' : 'bg-[#fdf4f2] text-chaskaa-600'}`}><Icon name={icon} size={19} /></span>
+          <button key={name} onClick={() => setSegment(name)} className={`rounded-2xl border-2 p-4 text-left transition ${segment === name ? 'border-chaskaa-500 bg-chaskaa-50 shadow-card' : 'border-[#f6e4ea] bg-white hover:border-chaskaa-200'}`}>
+            <span className={`grid h-10 w-10 place-items-center rounded-xl ${segment === name ? 'bg-chaskaa-600 text-white' : 'bg-[#fdf2f4] text-chaskaa-600'}`}><Icon name={icon} size={19} /></span>
             <p className="mt-3 text-sm font-extrabold text-[#2b1d20]">{name}</p>
             <p className="mt-0.5 text-[10px] text-[#8a7477]">{desc}</p>
           </button>
@@ -194,7 +194,7 @@ export function TiffinService() {
       <Section title="How It Works">
         <div className="grid gap-3 sm:grid-cols-4">
           {[['Choose Your Plan', 'LunchBox'], ['Select Duration', 'CalendarDays'], ['Make Payment', 'CreditCard'], ['Get Daily Tiffin', 'Package']].map(([t, icon], i) => (
-            <div key={t} className="rounded-2xl border border-[#f1e0dc] bg-white p-4 text-center">
+            <div key={t} className="rounded-2xl border border-[#f6e4ea] bg-white p-4 text-center">
               <span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-chaskaa-50 text-chaskaa-600"><Icon name={icon} size={19} /></span>
               <p className="mt-3 text-xs font-extrabold text-[#2b1d20]">{i + 1}. {t}</p>
             </div>
@@ -203,9 +203,9 @@ export function TiffinService() {
       </Section>
 
       <Section title="Sample Weekly Menu">
-        <div className="overflow-x-auto rounded-2xl border border-[#f1e0dc] bg-white">
+        <div className="overflow-x-auto rounded-2xl border border-[#f6e4ea] bg-white">
           <table className="w-full min-w-[640px] text-left text-xs">
-            <thead className="bg-[#fdf4f2] text-[#8a7477]"><tr><th className="p-3">Day</th><th className="p-3">Lunch</th><th className="p-3">Dinner</th></tr></thead>
+            <thead className="bg-[#fdf2f4] text-[#8a7477]"><tr><th className="p-3">Day</th><th className="p-3">Lunch</th><th className="p-3">Dinner</th></tr></thead>
             <tbody className="divide-y divide-[#f6eae7]">{weeklyMenu.map((m) => <tr key={m.day}><td className="p-3 font-extrabold text-chaskaa-700">{m.day}</td><td className="p-3 text-[#4a3438]">{m.lunch}</td><td className="p-3 text-[#4a3438]">{m.dinner}</td></tr>)}</tbody>
           </table>
         </div>
@@ -237,7 +237,7 @@ export function PlanDetail() {
             <p className="mt-1 text-sm text-white/75">{plan.duration} · {plan.meals}</p>
             <p className="mt-5 text-4xl font-extrabold">₹{plan.price.toLocaleString('en-IN')} <span className="text-sm font-semibold text-white/70">{plan.unit}</span></p>
           </div>
-          <Section title="Plan Inclusions"><div className="grid gap-3 sm:grid-cols-2">{plan.highlights.map((h) => <div key={h} className="flex items-center gap-3 rounded-xl border border-[#f1e0dc] bg-white p-4"><span className="grid h-9 w-9 place-items-center rounded-lg bg-emerald-50 text-emerald-600"><Icon name="Check" size={16} /></span><span className="text-xs font-bold text-[#4a3438]">{h}</span></div>)}</div></Section>
+          <Section title="Plan Inclusions"><div className="grid gap-3 sm:grid-cols-2">{plan.highlights.map((h) => <div key={h} className="flex items-center gap-3 rounded-xl border border-[#f6e4ea] bg-white p-4"><span className="grid h-9 w-9 place-items-center rounded-lg bg-emerald-50 text-emerald-600"><Icon name="Check" size={16} /></span><span className="text-xs font-bold text-[#4a3438]">{h}</span></div>)}</div></Section>
           <Section title="Sample Weekly Menu">
             <div className="grid gap-2 sm:grid-cols-2">{plan.menu.map((m) => <div key={m} className="flex items-center gap-2 rounded-xl bg-white p-3 text-xs font-semibold text-[#4a3438] shadow-card"><Icon name="CheckCircle2" size={15} className="text-chaskaa-500" /> {m}</div>)}</div>
           </Section>
@@ -248,7 +248,7 @@ export function PlanDetail() {
             <label className="block"><span className="label">Delivery address</span><div className="rounded-xl border border-[#eadddd] p-3 text-xs text-[#4a3438]">{address.line}, {address.city} – {address.pincode}</div></label>
             <label className="mt-4 block"><span className="label">Start date</span><input className="input" value={start} onChange={(e) => setStart(e.target.value)} /></label>
             {plan.segment === 'Corporate' && <label className="mt-4 block"><span className="label">Team size</span><input className="input" type="number" min="5" value={team} onChange={(e) => setTeam(Number(e.target.value))} /><span className="mt-1 block text-[10px] text-[#8a7477]">Minimum 5 members for corporate plans</span></label>}
-            <div className="mt-5 space-y-2 rounded-xl bg-[#fdf4f2] p-3 text-xs">
+            <div className="mt-5 space-y-2 rounded-xl bg-[#fdf2f4] p-3 text-xs">
               <div className="flex justify-between"><span className="text-[#8a7477]">Plan price</span><b>{inr(plan.price * (plan.segment === 'Corporate' ? team : 1))}</b></div>
               <div className="flex justify-between"><span className="text-[#8a7477]">Delivery</span><b className="text-emerald-600">FREE</b></div>
               <div className="flex justify-between border-t border-[#eddcd8] pt-2 text-sm"><span className="font-bold">Total</span><b className="text-chaskaa-600">{inr(plan.price * (plan.segment === 'Corporate' ? team : 1))}</b></div>
@@ -300,7 +300,7 @@ export function RestaurantDetail() {
       {tab === 'About' && <div className="card mb-5 p-5 text-xs leading-relaxed text-[#6d585b]">{r.name} is a trusted Chaskaa partner known for {r.tags.toLowerCase()}. All orders are packed hygienically and delivered fresh.</div>}
       {tab === 'Menu' && <Section title={`Menu (${r.menu.length})`}>
         <div className="grid gap-3 md:grid-cols-2">{r.menu.map((m) => (
-          <div key={m.id} className="flex gap-4 rounded-2xl border border-[#f1e0dc] bg-white p-4 shadow-card">
+          <div key={m.id} className="flex gap-4 rounded-2xl border border-[#f6e4ea] bg-white p-4 shadow-card">
             <div className="min-w-0 flex-1">
               <span className={`mb-1 inline-block h-3 w-3 rounded-sm border-2 ${m.veg ? 'border-emerald-600 bg-emerald-100' : 'border-rose-600 bg-rose-100'}`} />
               <p className="text-sm font-extrabold text-[#2b1d20]">{m.name}</p>
@@ -479,7 +479,7 @@ export function CustomerSubscriptions() {
       <div className="space-y-4">{mySubscriptions.map((s) => (
         <div key={s.id} className="card p-5">
           <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-base font-extrabold">{s.plan}</p><p className="text-[11px] text-[#8a7477]">{s.vendor} · {s.id}</p></div><Badge tone={s.status === 'Active' ? 'green' : 'amber'} dot>{s.status}</Badge></div>
-          <div className="mt-4 grid grid-cols-2 gap-3 text-xs sm:grid-cols-4">{[['Duration', s.duration], ['Meals', s.meals], ['Start', s.start], ['Valid till', s.end]].map(([k, v]) => <div key={k} className="rounded-xl bg-[#fdf4f2] p-3"><p className="text-[10px] font-semibold text-[#8a7477]">{k}</p><p className="mt-0.5 font-extrabold">{v}</p></div>)}</div>
+          <div className="mt-4 grid grid-cols-2 gap-3 text-xs sm:grid-cols-4">{[['Duration', s.duration], ['Meals', s.meals], ['Start', s.start], ['Valid till', s.end]].map(([k, v]) => <div key={k} className="rounded-xl bg-[#fdf2f4] p-3"><p className="text-[10px] font-semibold text-[#8a7477]">{k}</p><p className="mt-0.5 font-extrabold">{v}</p></div>)}</div>
           <div className="mt-4 flex flex-wrap items-center gap-2"><button className="btn-soft !py-2 !text-xs" onClick={() => toggleMySubscription(s.id)}>{s.status === 'Paused' ? 'Resume plan' : 'Pause plan'}</button><button className="btn-ghost !py-2 !text-xs" onClick={() => navigate('/customer/tiffin')}>Change plan</button><span className="ml-auto text-sm font-extrabold text-chaskaa-600">{inr(s.price)}</span></div>
         </div>
       ))}</div>
@@ -515,13 +515,13 @@ export function CustomerProfile() {
   ];
   return (
     <div className="fade-in">
-      <div className="flex items-center gap-4 rounded-2xl border border-[#f1e0dc] bg-white p-5 shadow-card">
+      <div className="flex items-center gap-4 rounded-2xl border border-[#f6e4ea] bg-white p-5 shadow-card">
         <span className="grid h-16 w-16 place-items-center rounded-full bg-chaskaa-100 text-xl font-extrabold text-chaskaa-700">AR</span>
         <div><p className="text-lg font-extrabold text-[#2b1d20]">Akash Rai</p><p className="text-xs text-[#8a7477]">+91 98765 43210 · akash.rai@example.com</p><Badge tone="green" className="mt-2">Student verified</Badge></div>
         <button className="ml-auto text-chaskaa-600"><Icon name="Pencil" size={16} /></button>
       </div>
       <div className="mt-5 card p-5"><p className="text-xs font-bold text-[#8a7477]">Delivery address</p><p className="mt-1 text-sm font-bold">{address.line}</p><p className="text-xs text-[#8a7477]">{address.city} – {address.pincode}</p></div>
-      <div className="mt-5 grid gap-2 sm:grid-cols-2">{links.map(([label, icon, path]) => <button key={label} onClick={() => navigate(path)} className="flex items-center gap-3 rounded-xl border border-[#f1e0dc] bg-white p-4 text-left transition hover:border-chaskaa-200 hover:shadow-card"><span className="grid h-9 w-9 place-items-center rounded-lg bg-chaskaa-50 text-chaskaa-600"><Icon name={icon} size={17} /></span><span className="flex-1 text-xs font-extrabold text-[#4a3438]">{label}</span><Icon name="ChevronRight" size={15} className="text-[#b09b9d]" /></button>)}</div>
+      <div className="mt-5 grid gap-2 sm:grid-cols-2">{links.map(([label, icon, path]) => <button key={label} onClick={() => navigate(path)} className="flex items-center gap-3 rounded-xl border border-[#f6e4ea] bg-white p-4 text-left transition hover:border-chaskaa-200 hover:shadow-card"><span className="grid h-9 w-9 place-items-center rounded-lg bg-chaskaa-50 text-chaskaa-600"><Icon name={icon} size={17} /></span><span className="flex-1 text-xs font-extrabold text-[#4a3438]">{label}</span><Icon name="ChevronRight" size={15} className="text-[#b09b9d]" /></button>)}</div>
       <button onClick={() => navigate('/')} className="mt-6 w-full rounded-xl border border-dashed border-chaskaa-300 bg-chaskaa-50/50 py-3 text-xs font-extrabold text-chaskaa-700">Switch workspace / All apps ↗</button>
       <div className="mt-3 flex w-full items-center justify-center rounded-xl border border-[#f0e2df] bg-white py-3 text-xs font-extrabold text-rose-600 hover:bg-rose-50">
         <LogoutButton variant="link" className="!text-rose-600" />

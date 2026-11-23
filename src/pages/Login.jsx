@@ -71,7 +71,7 @@ export default function Login() {
       </div>
 
       {/* Login panel */}
-      <div className="flex items-center justify-center bg-[#fbf8f7] px-4 py-10 sm:px-8">
+      <div className="flex items-center justify-center bg-[#fef5f8] px-4 py-10 sm:px-8">
         <div className="w-full max-w-lg">
           <div className="mb-7 lg:hidden">
             <p className="text-2xl font-extrabold text-chaskaa-600">Chaskaa</p>

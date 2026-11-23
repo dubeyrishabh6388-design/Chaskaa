@@ -33,7 +33,7 @@ function Portal() {
     { to: session ? '/vendor' : '/login?role=merchant', title: 'Merchant Panel', desc: 'Kitchen order board, menu manager, tiffin operations & earnings.', icon: 'Store', tone: 'from-amber-600 to-chaskaa-700', badge: 'Vendor' },
   ];
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#fbf8f7] via-[#fff8f5] to-[#fdf2f0]">
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#fef5f8] via-[#fff8f9] to-[#fdf2f4]">
       <div className="h-1.5 bg-gradient-to-r from-chaskaa-700 via-chaskaa-500 to-amber-400" />
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
         <div className="flex items-center gap-2.5"><span className="grid h-10 w-10 place-items-center rounded-xl bg-chaskaa-600 text-xl font-black text-white shadow-card">C</span><div><p className="text-xl font-extrabold leading-none text-[#5c0f18]">Chaskaa</p><p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-chaskaa-500">Har bite Mein Chaskaa</p></div></div>

@@ -8,7 +8,7 @@ function CustomerLogo() {
   return (
     <Link to="/customer" className="flex items-center gap-2">
       <span className="grid h-9 w-9 place-items-center rounded-xl bg-chaskaa-600 text-base font-black text-white shadow-sm">C</span>
-      <span className="text-xl font-extrabold tracking-tight text-[#5c0f18]">Chaskaa</span>
+      <span className="text-xl font-extrabold tracking-tight text-[#51010e]">Chaskaa</span>
     </Link>
   );
 }
@@ -39,7 +39,7 @@ export default function CustomerLayout() {
 
   return (
     <div className="min-h-screen bg-[#fff9f6] pb-20 lg:pb-0">
-      <div className="h-1 bg-gradient-to-r from-chaskaa-700 via-chaskaa-500 to-amber-400" />
+      <div className="h-1 bg-active-nav" />
 
       <header className="sticky top-0 z-40 border-b border-[#f4e3e0] bg-white/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
@@ -57,7 +57,7 @@ export default function CustomerLayout() {
 
           <nav className="ml-auto hidden items-center gap-1 lg:flex">
             {navItems.slice(0, 4).map((n) => (
-              <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) => `rounded-lg px-3 py-2 text-xs font-bold ${isActive ? 'bg-chaskaa-50 text-chaskaa-700' : 'text-[#6d585b] hover:bg-[#fdf4f2]'}`}>{n.label}</NavLink>
+              <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) => `rounded-lg px-3 py-2 text-xs font-bold ${isActive ? 'bg-chaskaa-50 text-chaskaa-700' : 'text-[#6d585b] hover:bg-chaskaa-50'}`}>{n.label}</NavLink>
             ))}
           </nav>
 

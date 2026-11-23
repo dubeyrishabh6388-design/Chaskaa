@@ -179,7 +179,7 @@ export const revenueSeries = [
 ];
 
 export const serviceMix = [
-  { name: 'Food delivery', value: 56, color: '#ec4b3f' },
+  { name: 'Food delivery', value: 56, color: '#b00528' },
   { name: 'Student tiffin', value: 28, color: '#f6b73c' },
   { name: 'Corporate tiffin', value: 16, color: '#7e2640' },
 ];

@@ -92,7 +92,7 @@ export default function Dashboard() {
                 <XAxis dataKey="date" tick={{ fontSize: 10, fill: '#9b888b' }} axisLine={false} tickLine={false} interval={0} />
                 <YAxis tick={{ fontSize: 10, fill: '#9b888b' }} axisLine={false} tickLine={false} />
                 <Tooltip content={<ChartTooltip />} cursor={{ fill: '#fdf5f5' }} />
-                <Bar dataKey="delivery" name="Delivery" fill="#ec4b3f" radius={[5, 5, 0, 0]} maxBarSize={17} animationDuration={900} />
+                <Bar dataKey="delivery" name="Delivery" fill="#b00528" radius={[5, 5, 0, 0]} maxBarSize={17} animationDuration={900} />
                 <Bar dataKey="tiffin" name="Tiffin" fill="#f6b73c" radius={[5, 5, 0, 0]} maxBarSize={17} animationDuration={900} />
               </BarChart>
             </ResponsiveContainer>

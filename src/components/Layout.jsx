@@ -10,7 +10,7 @@ function Logo() {
     <div className="flex items-center gap-2.5">
       <span className="relative grid h-9 w-9 place-items-center rounded-xl bg-white/15 ring-1 ring-white/25 backdrop-blur">
         <span className="text-lg font-black text-white">C</span>
-        <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-amber-400 ring-2 ring-[#6a1222]" />
+        <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-amber-400 ring-2 ring-[#5c0110]" />
       </span>
       <span className="text-[21px] font-extrabold tracking-tight text-white">Chaskaa</span>
     </div>
@@ -36,9 +36,9 @@ function Sidebar({ open, onClose }) {
           <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-white/55">Har bite Mein Chaskaa</p>
         </div>
 
-        <div className="mx-4 mb-4 rounded-xl bg-white/10 p-3 ring-1 ring-white/15 backdrop-blur-sm">
+        <div className="mx-4 mb-4 rounded-xl bg-white/[0.07] p-3 ring-1 ring-white/10 backdrop-blur-sm">
           <div className="flex items-center gap-2.5">
-            <Avatar name="Akash Rai" tone="wine" />
+            <Avatar name="Akash Rai" tone="sidebar" />
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-bold">Akash Rai</p>
               <p className="text-[11px] text-white/60">Super Admin</p>
@@ -56,11 +56,11 @@ function Sidebar({ open, onClose }) {
                   <NavLink
                     key={item.path}
                     to={item.path}
-                    className={({ isActive }) => `group flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] font-semibold transition-all ${isActive ? 'bg-white text-wine-800 shadow-sm' : 'text-white/75 hover:bg-white/10 hover:text-white'}`}
+                    className={({ isActive }) => `group flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] font-semibold transition-all ${isActive ? 'bg-active-nav text-white shadow-sm' : 'text-white/75 hover:bg-white/10 hover:text-white'}`}
                   >
                     {({ isActive }) => (
                       <>
-                        <Icon name={item.icon} size={17} className={isActive ? 'text-chaskaa-600' : 'text-white/60 group-hover:text-white'} />
+                        <Icon name={item.icon} size={17} className={isActive ? 'text-white' : 'text-white/60 group-hover:text-white'} />
                         <span className="flex-1">{item.label}</span>
                         {item.path === '/support' && alerts.length > 0 && (
                           <span className="rounded-full bg-chaskaa-500 px-1.5 py-0.5 text-[10px] font-bold text-white">{alerts.length}</span>
@@ -160,7 +160,7 @@ function Topbar({ onMenu }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-20 flex h-[74px] shrink-0 items-center gap-3 border-b border-[#f2e9e9] bg-[#fdf9f9]/95 px-4 backdrop-blur-md sm:px-6" ref={wrap}>
+    <header className="sticky top-0 z-20 flex h-[74px] shrink-0 items-center gap-3 border-b border-[#f4e3e9] bg-[#fdf7f7]/95 px-4 backdrop-blur-md sm:px-6" ref={wrap}>
       <button className="btn-ghost !p-2 lg:hidden" onClick={onMenu} aria-label="Open menu"><Icon name="Menu" size={19} /></button>
       <div className="hidden min-w-[230px] md:block">
         <p className="text-[15px] font-bold text-[#2b1d20]">Welcome Back, <span className="text-chaskaa-600">Akash Rai</span> <span className="align-middle">👋</span></p>
@@ -252,7 +252,7 @@ export default function Layout() {
     return () => document.removeEventListener('keydown', fn);
   }, []);
   return (
-    <div className="min-h-screen bg-[#fbf8f7]">
+    <div className="min-h-screen bg-[#fef5f8]">
       <Sidebar open={menuOpen} onClose={setMenuOpen} />
       <div className="lg:pl-[258px]">
         <Topbar onMenu={() => setMenuOpen(true)} />

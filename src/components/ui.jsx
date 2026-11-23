@@ -29,7 +29,7 @@ export function Icon({ name, size = 18, className = '', ...props }) {
 export function Badge({ children, tone = 'neutral', dot = false, className = '' }) {
   const tones = {
     green: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
-    red: 'bg-rose-50 text-rose-700 ring-rose-200',
+    red: 'bg-chaskaa-50 text-chaskaa-700 ring-chaskaa-200',
     amber: 'bg-amber-50 text-amber-700 ring-amber-200',
     blue: 'bg-sky-50 text-sky-700 ring-sky-200',
     purple: 'bg-violet-50 text-violet-700 ring-violet-200',
@@ -247,7 +247,7 @@ export function DataTable({ columns, rows, search = true, searchPlaceholder = 'S
 export function Avatar({ name, size = 'md', tone = 'red' }) {
   const initials = String(name || '?').split(' ').map((p) => p[0]).slice(0, 2).join('').toUpperCase();
   const sizes = { sm: 'h-8 w-8 text-[11px]', md: 'h-10 w-10 text-xs', lg: 'h-12 w-12 text-sm' };
-  const tones = { red: 'bg-chaskaa-100 text-chaskaa-700', wine: 'bg-wine-100 text-wine-700', amber: 'bg-amber-100 text-amber-700' };
+  const tones = { red: 'bg-chaskaa-100 text-chaskaa-700', wine: 'bg-wine-100 text-wine-700', sidebar: 'bg-white/20 text-white', amber: 'bg-amber-100 text-amber-700' };
   return <span className={`grid shrink-0 place-items-center rounded-full font-bold ${sizes[size]} ${tones[tone]}`}>{initials}</span>;
 }
 

@@ -23,7 +23,7 @@ A portal links to all three apps:
 
 ## Theme
 
-Wine/maroon sidebar (`#6a1222` family), warm-red primary (`#d93025`), light `#fbf8f7` surfaces — defined in `tailwind.config.js` and `src/index.css`, shared by all three workspaces.
+Deep wine sidebar (`#51010e` base → `#730216` top), crimson primary (`#b00528`), orange→crimson active nav pill (`#fc5e1d → #c2223a`), and light `#fef5f8` surfaces - all sampled from the reference dashboard and defined in `tailwind.config.js` and `src/index.css`, shared by all three workspaces.
 
 ## Notes
 
