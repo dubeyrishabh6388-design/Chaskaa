@@ -42,7 +42,7 @@ export default function CustomerLayout() {
       <div className="h-1 bg-active-nav" />
 
       <header className="sticky top-0 z-40 border-b border-[#f4e3e0] bg-white/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
+        <div className="flex w-full items-center gap-3 px-4 py-3 sm:px-6 lg:px-8 2xl:px-10">
           <button className="rounded-lg p-1 text-[#6d585b] lg:hidden" onClick={() => navigate(-1)} aria-label="Back"><Icon name="ArrowLeft" size={20} /></button>
           <CustomerLogo />
           <button onClick={() => navigate('/customer/profile')} className="ml-2 hidden min-w-0 text-left sm:block">
@@ -69,7 +69,7 @@ export default function CustomerLayout() {
           <button onClick={() => navigate('/dashboard')} className="hidden rounded-xl border border-[#f0dfdc] px-3 py-2 text-[11px] font-bold text-[#8a7477] hover:border-chaskaa-300 hover:text-chaskaa-600 xl:block">Admin console ↗</button>
         </div>
 
-        <div className="mx-auto max-w-6xl px-4 pb-3 sm:px-6">
+        <div className="w-full px-4 pb-3 sm:px-6 lg:px-8 2xl:px-10">
           <form onSubmit={submitSearch} className="relative md:hidden">
             <Icon name="Search" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b09b9d]" />
             <input value={query} onChange={(e) => setQuery(e.target.value)} className="w-full rounded-xl border border-[#f0dfdc] bg-[#fffaf8] py-2.5 pl-9 pr-3 text-xs outline-none focus:border-chaskaa-400" placeholder="Search food, tiffin, restaurants..." />
@@ -77,7 +77,7 @@ export default function CustomerLayout() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-5 sm:px-6 sm:py-7">
+      <main className="w-full px-4 py-5 sm:px-6 sm:py-7 lg:px-8 2xl:px-10">
         <Outlet />
         <footer className="mt-12 border-t border-[#f0e0dc] pt-6 text-center text-[11px] text-[#a89598]">
           <p className="font-extrabold text-chaskaa-600">Chaskaa · Har bite Mein Chaskaa</p>

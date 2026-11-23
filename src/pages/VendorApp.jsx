@@ -61,7 +61,7 @@ export function VendorLayout() {
         </div>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-[#efe4e4] bg-white/90 px-4 py-3 backdrop-blur-md sm:px-6">
+        <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-[#efe4e4] bg-white/90 px-4 py-3 backdrop-blur-md sm:px-6 lg:px-8 2xl:px-10">
           <button className="rounded-lg p-1 text-[#6d585b] lg:hidden" onClick={() => setMobileOpen(true)}><Icon name="Menu" size={21} /></button>
           <div className="flex items-center gap-2 text-xs text-[#8a7477]"><Icon name="Store" size={15} className="text-chaskaa-600" /> <b className="text-[#2b1d20]">Bhojan Homes</b><span className="hidden sm:inline">/ Gomti Nagar, Lucknow</span></div>
           <div className="ml-auto flex items-center gap-2">
@@ -70,7 +70,7 @@ export function VendorLayout() {
             <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-chaskaa-100 text-xs font-bold text-chaskaa-700">BH</span>
           </div>
         </header>
-        <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
+        <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8 2xl:p-10">
           <Outlet />
           <footer className="mt-10 flex flex-wrap items-center justify-between gap-2 border-t border-[#f0e3e3] pt-5 text-center text-[11px] text-[#a89598]">
             <span>© 2026 Chaskaa · Merchant Portal · Har bite Mein Chaskaa</span>

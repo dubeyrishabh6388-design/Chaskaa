@@ -25,6 +25,8 @@ A portal links to all three apps:
 
 Deep wine sidebar (`#51010e` base → `#730216` top), crimson primary (`#b00528`), orange→crimson active nav pill (`#fc5e1d → #c2223a`), and light `#fef5f8` surfaces - all sampled from the reference dashboard and defined in `tailwind.config.js` and `src/index.css`, shared by all three workspaces.
 
+All three workspaces use a **full-width desktop shell** (no centered `max-w-*` cap). Sidebars occupy their fixed rail and the remaining viewport width is used entirely by content; padding scales up on `lg`/`2xl` and mobile stays edge-to-edge with no horizontal overflow. Product imagery is local in `public/img`, with exact source titles recorded in `public/img/SOURCES.md`.
+
 ## Notes
 
 - All data is realistic mock data in `src/data/mockData.js` and `src/data/customerData.js`.

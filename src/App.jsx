@@ -35,11 +35,11 @@ function Portal() {
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#fef5f8] via-[#fff8f9] to-[#fdf2f4]">
       <div className="h-1.5 bg-gradient-to-r from-chaskaa-700 via-chaskaa-500 to-amber-400" />
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
+      <header className="flex w-full items-center justify-between px-5 py-6 sm:px-8 lg:px-10 2xl:px-12">
         <div className="flex items-center gap-2.5"><span className="grid h-10 w-10 place-items-center rounded-xl bg-chaskaa-600 text-xl font-black text-white shadow-card">C</span><div><p className="text-xl font-extrabold leading-none text-[#5c0f18]">Chaskaa</p><p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-chaskaa-500">Har bite Mein Chaskaa</p></div></div>
         <Link to="/login" className="btn-ghost !py-2 !text-xs">{session ? 'Switch account' : 'Sign in to all apps'} →</Link>
       </header>
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-5 py-10 sm:px-8">
+      <main className="flex w-full flex-1 flex-col justify-center px-5 py-10 sm:px-8 lg:px-10 2xl:px-12">
         <div className="mb-10 max-w-2xl">
           <p className="mb-2 text-xs font-bold uppercase tracking-[.2em] text-chaskaa-600">Chaskaa Platform</p>
           <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-[#2b1d20] sm:text-5xl">One platform. <span className="text-chaskaa-600">Every bite.</span></h1>

@@ -160,7 +160,7 @@ function Topbar({ onMenu }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-20 flex h-[74px] shrink-0 items-center gap-3 border-b border-[#f4e3e9] bg-[#fdf7f7]/95 px-4 backdrop-blur-md sm:px-6" ref={wrap}>
+    <header className="sticky top-0 z-20 flex h-[74px] shrink-0 items-center gap-3 border-b border-[#f4e3e9] bg-[#fdf7f7]/95 px-4 backdrop-blur-md sm:px-6 lg:px-8 2xl:px-10" ref={wrap}>
       <button className="btn-ghost !p-2 lg:hidden" onClick={onMenu} aria-label="Open menu"><Icon name="Menu" size={19} /></button>
       <div className="hidden min-w-[230px] md:block">
         <p className="text-[15px] font-bold text-[#2b1d20]">Welcome Back, <span className="text-chaskaa-600">Akash Rai</span> <span className="align-middle">👋</span></p>
@@ -256,7 +256,7 @@ export default function Layout() {
       <Sidebar open={menuOpen} onClose={setMenuOpen} />
       <div className="lg:pl-[258px]">
         <Topbar onMenu={() => setMenuOpen(true)} />
-        <main className="mx-auto max-w-[1500px] p-4 sm:p-6 lg:p-7">
+        <main className="w-full p-4 sm:p-6 lg:p-8 2xl:p-10">
           <QuickRail />
           <Outlet />
           <footer className="mt-10 flex flex-wrap items-center justify-between gap-2 border-t border-[#f0e7e7] pt-5 text-[11px] text-[#a89598]">
