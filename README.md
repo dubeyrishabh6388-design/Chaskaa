@@ -27,6 +27,8 @@ Deep wine sidebar (`#51010e` base → `#730216` top), crimson primary (`#b00528`
 
 All three workspaces use a **full-width desktop shell** (no centered `max-w-*` cap). Sidebars occupy their fixed rail and the remaining viewport width is used entirely by content; padding scales up on `lg`/`2xl` and mobile stays edge-to-edge with no horizontal overflow. Product imagery is local in `public/img`, with exact source titles recorded in `public/img/SOURCES.md`.
 
+The customer home fills wide screens with a dense, natural-sized layout instead of stretched cards: 12 cuisine categories, 5 promo banners, a tiffin hero with a real photo panel, 5 plans, 10 best-selling dishes, 10 restaurants, 4 coupons and a trust strip. Grids add columns at `xl`/`2xl` so cards keep their natural proportions from 375px to 2560px. Admin dashboard includes a trending-dishes strip; restaurant filters are wired to the category/search data.
+
 ## Notes
 
 - All data is realistic mock data in `src/data/mockData.js` and `src/data/customerData.js`.

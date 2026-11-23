@@ -28,6 +28,15 @@ Every local image was checked against the **exact Wikimedia Commons file title**
 | `hero-tiffin.jpg` | `Dabba.jpg` | Indian tiffin carrier hero |
 | `hero-food.jpg` | `Butter Chicken & Butter Naan - Home - Chandigarh - India - 0006.jpg` | Food hero / offer banners |
 | `rest-fastfood.jpg` | `Hamburger (12164386105).jpg` | Foodies Hub / fast food |
+| `masala-dosa.jpg` | `Masala dosa 2.jpg` | South Indian category, Dosa Corner, Masala Dosa |
+| `veg-pizza.jpg` | `Vegetarian-pizza-top.jpg` | Pizza category, Pizza Studio, Vegetarian Pizza |
+| `paneer-roll.jpg` | `Paneer kathi roll homemade.jpg` | Rolls category, Paneer Kathi Roll |
+| `veg-salad.jpg` | `Bowl of vegetable salad 001.jpg` | Garden Salad, Green Bowl Kitchen, Corporate trial plan |
+| `ice-cream.jpg` | `Ice cream with garnish.jpg` | Ice Cream category, Ice Cream dish |
+| `pani-puri.jpg` | `Pani Puri-Street food.jpg` | Pani Puri, Chaat Bazaar |
+| `idli-sambar.jpg` | `Idli plate with sambar and coconut chutney.jpg` | Idli Sambar, Breakfast plan |
+| `chocolate-cake.jpg` | `Chocolate cake and Victoria sponge.jpg` | Chocolate Cake |
+| `rajma-chawal.jpg` | `Rajma Chawal Rajma Rice.jpg` | Rajma Chawal, Student Family plan |
 
 ## Fixed mismatches (second pass)
 

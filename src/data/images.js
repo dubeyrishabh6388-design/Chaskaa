@@ -34,7 +34,26 @@ export const dishImageMap = {
   'Lemonade': '/img/masala-lemonade.jpg',
   'Biryani': '/img/biryani.jpg',
   'Chicken Dum Biryani': '/img/biryani.jpg',
+  'Veg Biryani': '/img/biryani.jpg',
+  'Hyderabadi Biryani': '/img/biryani.jpg',
   'Samosa': '/img/snacks.jpg',
+  'Masala Dosa': '/img/masala-dosa.jpg',
+  'Dosa': '/img/masala-dosa.jpg',
+  'Idli Sambar': '/img/idli-sambar.jpg',
+  'Idli': '/img/idli-sambar.jpg',
+  'Paneer Kathi Roll': '/img/paneer-roll.jpg',
+  'Veg Roll': '/img/paneer-roll.jpg',
+  'Vegetarian Pizza': '/img/veg-pizza.jpg',
+  'Veg Pizza': '/img/veg-pizza.jpg',
+  'Margherita Pizza': '/img/veg-pizza.jpg',
+  'Garden Salad': '/img/veg-salad.jpg',
+  'Veg Salad': '/img/veg-salad.jpg',
+  'Ice Cream': '/img/ice-cream.jpg',
+  'Chocolate Cake': '/img/chocolate-cake.jpg',
+  'Pani Puri': '/img/pani-puri.jpg',
+  'Chaat': '/img/pani-puri.jpg',
+  'Rajma Chawal': '/img/rajma-chawal.jpg',
+  'Rajma Rice': '/img/rajma-chawal.jpg',
 };
 
 const keywordImages = [
@@ -46,6 +65,17 @@ const keywordImages = [
   ['thali', '/img/veg-thali.jpeg'],
   ['dal', '/img/dal-tadka.jpg'],
   ['biryani', '/img/biryani.jpg'],
+  ['dosa', '/img/masala-dosa.jpg'],
+  ['idli', '/img/idli-sambar.jpg'],
+  ['pizza', '/img/veg-pizza.jpg'],
+  ['roll', '/img/paneer-roll.jpg'],
+  ['kathi', '/img/paneer-roll.jpg'],
+  ['pani puri', '/img/pani-puri.jpg'],
+  ['chaat', '/img/pani-puri.jpg'],
+  ['salad', '/img/veg-salad.jpg'],
+  ['ice cream', '/img/ice-cream.jpg'],
+  ['cake', '/img/chocolate-cake.jpg'],
+  ['rajma', '/img/rajma-chawal.jpg'],
   ['jeera', '/img/jeera-rice.jpg'],
   ['pulao', '/img/jeera-rice.jpg'],
   ['rice', '/img/jeera-rice.jpg'],
@@ -74,6 +104,14 @@ export const categoryImageMap = {
   Beverages: '/img/masala-lemonade.jpg',
   Bowl: '/img/mixed-veg-bowl.jpg',
   Snacks: '/img/snacks.jpg',
+  'South Indian': '/img/masala-dosa.jpg',
+  Pizza: '/img/veg-pizza.jpg',
+  Biryani: '/img/biryani.jpg',
+  Rolls: '/img/paneer-roll.jpg',
+  Salads: '/img/veg-salad.jpg',
+  'Ice Cream': '/img/ice-cream.jpg',
+  Chaat: '/img/pani-puri.jpg',
+  Breakfast: '/img/idli-sambar.jpg',
 };
 
 /* Exact name first, then dish keywords, then category fallback. */
@@ -89,6 +127,12 @@ export const restaurantImages = {
   'rasoi-ghar': '/img/north-indian-thali.jpg',
   'tiffin-express': '/img/rest-tiffin.jpg',
   'foodies-hub': '/img/rest-fastfood.jpg',
+  'spice-route': '/img/north-indian-thali.jpg',
+  'dosa-corner': '/img/masala-dosa.jpg',
+  'pizza-studio': '/img/veg-pizza.jpg',
+  'biryani-blues': '/img/biryani.jpg',
+  'green-bowl': '/img/veg-salad.jpg',
+  'chaat-bazaar': '/img/pani-puri.jpg',
 };
 
 export const restaurantImage = (r) => restaurantImages[r?.id] || '/img/rest-indian.jpg';
@@ -97,9 +141,14 @@ export const categoryImages = {
   Thali: '/img/veg-thali.jpeg',
   'North Indian': '/img/north-indian-thali.jpg',
   Chinese: '/img/noodles.jpg',
+  Biryani: '/img/biryani.jpg',
   'Fast Food': '/img/rest-fastfood.jpg',
+  Pizza: '/img/veg-pizza.jpg',
+  'South Indian': '/img/masala-dosa.jpg',
+  Rolls: '/img/paneer-roll.jpg',
   Beverages: '/img/masala-lemonade.jpg',
   Desserts: '/img/dessert.jpg',
+  'Ice Cream': '/img/ice-cream.jpg',
   Tiffin: '/img/hero-tiffin.jpg',
 };
 
@@ -112,6 +161,8 @@ export const bannerImages = {
   1: '/img/hero-food.jpg',
   2: '/img/hero-tiffin.jpg',
   3: '/img/veg-thali.jpeg',
+  4: '/img/gulab-jamun.jpg',
+  5: '/img/biryani.jpg',
 };
 
 export function bannerImageFor(banner = {}) {
@@ -125,6 +176,9 @@ export function bannerImageFor(banner = {}) {
 export function vendorImage(name = '') {
   const n = String(name).toLowerCase();
   if (n.includes('biryani')) return '/img/biryani.jpg';
+  if (n.includes('dosa') || n.includes('south')) return '/img/masala-dosa.jpg';
+  if (n.includes('pizza')) return '/img/veg-pizza.jpg';
+  if (n.includes('chaat')) return '/img/pani-puri.jpg';
   if (n.includes('chole')) return '/img/chole-bhature.jpg';
   if (n.includes('dal')) return '/img/dal-tadka.jpg';
   if (n.includes('green bowl')) return '/img/mixed-veg-bowl.jpg';

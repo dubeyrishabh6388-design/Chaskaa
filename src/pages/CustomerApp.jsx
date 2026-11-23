@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { categories, customerBanners, paymentMethods, restaurants, tiffinPlansCustomer, weeklyMenu } from '../data/customerData';
+import { categories, customerBanners, offerCoupons, paymentMethods, popularDishes, restaurants, tiffinPlansCustomer, weeklyMenu } from '../data/customerData';
 import { bannerImages, categoryImages, dishImage, planImages, restaurantImage } from '../data/images';
 import { useApp } from '../store/AppContext';
 import { Badge, Icon } from '../components/ui';
@@ -64,6 +64,26 @@ export function CustomerLogin() {
   );
 }
 
+function DishCard({ dish }) {
+  const { addToCart } = useApp();
+  return (
+    <div className="group overflow-hidden rounded-2xl border border-[#f6e4ea] bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-float">
+      <div className="relative aspect-[4/3] overflow-hidden">
+        <img src={dishImage(dish.name, dish.category)} alt={dish.name} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+        <span className="absolute left-2 top-2 flex items-center gap-1 rounded-lg bg-white/95 px-2 py-1 text-[10px] font-extrabold text-[#2b1d20] shadow-sm"><Icon name="Star" size={11} className="fill-amber-400 text-amber-400" />{dish.rating}</span>
+      </div>
+      <div className="p-3">
+        <div className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 shrink-0 rounded-sm border-2 border-emerald-600 bg-emerald-100" /><p className="truncate text-xs font-extrabold text-[#2b1d20]">{dish.name}</p></div>
+        <p className="mt-0.5 truncate text-[10px] text-[#8a7477]">{dish.desc}</p>
+        <div className="mt-2.5 flex items-center justify-between gap-2">
+          <span className="text-sm font-extrabold text-chaskaa-600">{inr(dish.price)}</span>
+          <button onClick={() => addToCart(dish)} className="rounded-lg border border-chaskaa-300 bg-chaskaa-50 px-2.5 py-1.5 text-[10px] font-extrabold text-chaskaa-700 transition hover:bg-chaskaa-600 hover:text-white">ADD +</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ---------------- Home ---------------- */
 export function CustomerHome() {
   const navigate = useNavigate();
@@ -77,14 +97,14 @@ export function CustomerHome() {
         <button onClick={() => navigate('/customer/profile')} className="shrink-0 text-xs font-bold text-chaskaa-600">Change</button>
       </div>
 
-      <div className="mb-8 grid gap-3 sm:grid-cols-3">
+      <div className="mb-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {customerBanners.map((b) => (
-          <button key={b.id} onClick={() => navigate(b.id === 1 ? '/customer/restaurants' : '/customer/tiffin')}
-            className="relative min-h-[116px] overflow-hidden rounded-2xl p-5 text-left text-white shadow-card transition hover:-translate-y-0.5 hover:shadow-float">
-            <img src={bannerImages[b.id]} alt="" className="absolute inset-0 h-full w-full object-cover" />
-            <span className="absolute inset-0 bg-gradient-to-r from-[#51010e]/95 via-[#730216]/80 to-[#b00528]/35" />
-            <span className="absolute -right-6 -top-8 h-28 w-28 rounded-full bg-white/10" />
-            <p className="relative text-lg font-extrabold leading-tight">{b.title}</p>
+          <button key={b.id} onClick={() => navigate(b.id === 2 || b.id === 3 ? '/customer/tiffin' : '/customer/restaurants')}
+            className="group relative min-h-[150px] overflow-hidden rounded-2xl p-4 text-left text-white shadow-card transition hover:-translate-y-0.5 hover:shadow-float sm:p-5">
+            <img src={bannerImages[b.id]} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+            <span className="absolute inset-0 bg-gradient-to-r from-[#51010e]/95 via-[#730216]/80 to-[#b00528]/30" />
+            <span className="absolute -right-8 -top-10 h-32 w-32 rounded-full bg-white/10" />
+            <p className="relative text-base font-extrabold leading-tight sm:text-lg">{b.title}</p>
             <p className="relative mt-1 text-[11px] text-white/80">{b.sub}</p>
             <span className="relative mt-4 inline-flex items-center gap-1 text-[11px] font-bold">Explore <Icon name="ArrowRight" size={13} /></span>
           </button>
@@ -92,49 +112,88 @@ export function CustomerHome() {
       </div>
 
       <Section title="What's on your mind?" action={<button className="text-xs font-bold text-chaskaa-600" onClick={() => navigate('/customer/restaurants')}>See all →</button>}>
-        <div className="grid grid-cols-4 gap-3 sm:grid-cols-7">
+        <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 sm:gap-3 lg:grid-cols-8 xl:grid-cols-12">
           {categories.map((c) => (
-            <button key={c.name} onClick={() => navigate('/customer/restaurants')} className="group flex flex-col items-center gap-2 rounded-2xl border border-[#f2e1de] bg-white p-2.5 transition hover:-translate-y-0.5 hover:border-chaskaa-200 hover:shadow-card">
-              <img src={categoryImages[c.name]} alt={c.name} loading="lazy" className="h-12 w-12 rounded-xl object-cover shadow-sm transition duration-300 group-hover:scale-105 sm:h-16 sm:w-16" />
-              <span className="text-[10px] font-bold text-[#6d585b]">{c.name}</span>
+            <button key={c.name} onClick={() => navigate(`/customer/restaurants?q=${encodeURIComponent(c.name)}`)} className="group flex flex-col items-center gap-2 rounded-2xl border border-[#f2e1de] bg-white p-2 transition hover:-translate-y-0.5 hover:border-chaskaa-200 hover:shadow-card sm:p-2.5">
+              <img src={categoryImages[c.name]} alt={c.name} loading="lazy" className="h-12 w-12 rounded-xl object-cover shadow-sm transition duration-300 group-hover:scale-105 sm:h-16 sm:w-16 lg:h-[72px] lg:w-[72px]" />
+              <span className="text-center text-[10px] font-bold leading-tight text-[#6d585b] sm:text-[11px]">{c.name}</span>
             </button>
           ))}
         </div>
       </Section>
 
       <section className="relative mb-8 overflow-hidden rounded-2xl bg-gradient-to-br from-wine-800 via-wine-700 to-chaskaa-700 p-6 text-white shadow-float">
-        <img src="/img/hero-tiffin.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+        <img src="/img/hero-tiffin.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-25" />
         <span className="absolute inset-0 bg-gradient-to-r from-[#51010e]/95 via-[#730216]/80 to-[#b00528]/45" />
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
+        <div className="relative z-10 grid gap-6 xl:grid-cols-[1fr_360px] xl:items-center">
           <div>
             <Badge className="!bg-white/15 !text-white">TIFFIN SERVICE</Badge>
             <h2 className="mt-3 text-2xl font-extrabold sm:text-3xl">Healthy. Home Style. On Time.</h2>
-            <p className="mt-1 max-w-lg text-xs text-white/75">Daily, weekly & monthly tiffin plans for students and corporate teams. Fresh meals, zero hassle.</p>
+            <p className="mt-1 max-w-xl text-xs text-white/75">Daily, weekly & monthly tiffin plans for students and corporate teams. Fresh meals, zero hassle.</p>
             <div className="mt-5 flex flex-wrap gap-4">{[['25-30 min', 'Delivery'], ['4.8 ★', 'Rating'], ['₹89', 'Starting / meal']].map(([v, l]) => <div key={l}><p className="text-lg font-extrabold">{v}</p><p className="text-[10px] text-white/60">{l}</p></div>)}</div>
+            <button onClick={() => navigate('/customer/tiffin')} className="mt-5 rounded-xl bg-white px-5 py-3 text-sm font-extrabold text-chaskaa-700 shadow-lg transition hover:-translate-y-0.5">Subscribe Now →</button>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              {['Student — Affordable & Nutritious Meal Plans', 'Corporate — Premium & Hygienic Meal Plans'].map((t, i) => (
+                <button key={t} onClick={() => { setSegment(i ? 'Corporate' : 'Student'); navigate('/customer/tiffin'); }} className="flex items-center gap-3 rounded-xl bg-white/10 p-3 text-left ring-1 ring-white/15 backdrop-blur transition hover:bg-white/20">
+                  <img src={i ? planImages.Corporate : planImages.Student} alt="" loading="lazy" className="h-10 w-10 rounded-lg object-cover" />
+                  <span className="flex-1 text-[11px] font-bold">{t}</span><Icon name="ArrowRight" size={15} />
+                </button>
+              ))}
+            </div>
           </div>
-          <button onClick={() => navigate('/customer/tiffin')} className="rounded-xl bg-white px-5 py-3 text-sm font-extrabold text-chaskaa-700 shadow-lg transition hover:-translate-y-0.5">Subscribe Now →</button>
-        </div>
-        <div className="relative z-10 mt-6 grid gap-3 sm:grid-cols-2">
-          {['Student — Affordable & Nutritious Meal Plans', 'Corporate — Premium & Hygienic Meal Plans'].map((t, i) => (
-            <button key={t} onClick={() => { setSegment(i ? 'Corporate' : 'Student'); navigate('/customer/tiffin'); }} className="flex items-center gap-3 rounded-xl bg-white/10 p-4 text-left ring-1 ring-white/15 backdrop-blur transition hover:bg-white/20">
-              <img src={i ? planImages.Corporate : planImages.Student} alt="" className="h-10 w-10 rounded-lg object-cover" />
-              <span className="flex-1 text-xs font-bold">{t}</span><Icon name="ArrowRight" size={15} />
-            </button>
-          ))}
+          <div className="relative hidden h-72 overflow-hidden rounded-2xl ring-1 ring-white/25 xl:block">
+            <img src="/img/hero-tiffin.jpg" alt="" loading="lazy" className="h-full w-full object-cover" />
+            <span className="absolute inset-0 bg-gradient-to-t from-[#51010e]/80 via-transparent to-transparent" />
+            <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-xl bg-white/95 px-3 py-2 text-[#2b1d20] shadow-lg">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-chaskaa-50 text-chaskaa-600"><Icon name="LunchBox" size={16} /></span>
+              <span><span className="block text-[11px] font-extrabold">12,400+ meals</span><span className="block text-[10px] text-[#8a7477]">delivered fresh today</span></span>
+            </div>
+          </div>
         </div>
       </section>
 
       <Section title="Popular tiffin plans" action={<button className="text-xs font-bold text-chaskaa-600" onClick={() => navigate('/customer/tiffin')}>View All →</button>}>
-        <div className="grid gap-3 md:grid-cols-3">
-          {plans.slice(0, 3).map((p) => <PlanCard key={p.id} plan={p} />)}
+        <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {plans.slice(0, 5).map((p) => <PlanCard key={p.id} plan={p} />)}
+        </div>
+      </Section>
+
+      <Section title="Best sellers near you" action={<button className="text-xs font-bold text-chaskaa-600" onClick={() => navigate('/customer/restaurants')}>Explore menu →</button>}>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {popularDishes.map((d) => <DishCard key={d.id} dish={d} />)}
         </div>
       </Section>
 
       <Section title="Order Food Online" action={<button className="text-xs font-bold text-chaskaa-600" onClick={() => navigate('/customer/restaurants')}>See All →</button>}>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {restaurants.map((r) => <RestaurantCard key={r.id} r={r} />)}
         </div>
       </Section>
+
+      <Section title="Offers for you">
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          {offerCoupons.map((c) => (
+            <button key={c.code} onClick={() => navigate('/customer/restaurants')} className="group flex overflow-hidden rounded-2xl border border-[#f6e4ea] bg-white text-left shadow-card transition hover:-translate-y-0.5 hover:shadow-float">
+              <img src={c.img} alt="" loading="lazy" className={`h-24 w-24 shrink-0 object-cover bg-gradient-to-br ${c.tone}`} />
+              <span className="min-w-0 flex-1 p-3">
+                <span className="block text-[10px] font-extrabold tracking-wide text-chaskaa-600">{c.code}</span>
+                <span className="mt-0.5 block text-xs font-extrabold text-[#2b1d20]">{c.title}</span>
+                <span className="mt-0.5 block text-[10px] text-[#8a7477]">{c.sub}</span>
+              </span>
+              <span className="grid w-8 shrink-0 place-items-center text-chaskaa-500"><Icon name="ChevronRight" size={16} /></span>
+            </button>
+          ))}
+        </div>
+      </Section>
+
+      <div className="mb-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {[['ShieldCheck', 'Hygienic kitchens', 'Sealed packs, FSSAI partners'], ['Clock', 'On-time delivery', 'Hot food, every single time'], ['ChefHat', 'Home-style taste', 'Freshly cooked, never frozen'], ['Wallet', 'Pocket friendly', 'Plans starting at ₹89/day']].map(([icon, title, sub]) => (
+          <div key={title} className="flex items-center gap-3 rounded-2xl border border-[#f3e1de] bg-white p-3.5 shadow-card">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-chaskaa-50 text-chaskaa-600"><Icon name={icon} size={18} /></span>
+            <span className="min-w-0"><span className="block text-xs font-extrabold text-[#2b1d20]">{title}</span><span className="block truncate text-[10px] text-[#8a7477]">{sub}</span></span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -144,7 +203,7 @@ function PlanCard({ plan }) {
   return (
     <button onClick={() => navigate(`/customer/plans/${plan.id}`)} className="group overflow-hidden rounded-2xl border border-[#f6e4ea] bg-white text-left shadow-card transition hover:-translate-y-0.5 hover:border-chaskaa-300 hover:shadow-float">
       <div className="relative h-24 overflow-hidden">
-        <img src={plan.segment === 'Student' ? planImages.Student : planImages.Corporate} alt={plan.name} loading="lazy" className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+        <img src={plan.image || (plan.segment === 'Student' ? planImages.Student : planImages.Corporate)} alt={plan.name} loading="lazy" className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
         <span className="absolute inset-0 bg-gradient-to-t from-[#51010e]/60 to-transparent" />
         <span className="absolute bottom-2 left-3 text-sm font-extrabold text-white">{plan.name}</span>
       </div>
@@ -162,8 +221,8 @@ function PlanCard({ plan }) {
 function RestaurantCard({ r }) {
   const navigate = useNavigate();
   return (
-    <button onClick={() => navigate(`/customer/restaurants/${r.id}`)} className="overflow-hidden rounded-2xl border border-[#f6e4ea] bg-white text-left shadow-card transition hover:-translate-y-0.5 hover:shadow-float">
-      <div className="relative h-32 overflow-hidden">
+    <button onClick={() => navigate(`/customer/restaurants/${r.id}`)} className="group overflow-hidden rounded-2xl border border-[#f6e4ea] bg-white text-left shadow-card transition hover:-translate-y-0.5 hover:shadow-float">
+      <div className="relative h-40 overflow-hidden">
         <img src={restaurantImage(r)} alt={r.name} loading="lazy" className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
         <span className="absolute inset-0 bg-gradient-to-t from-[#51010e]/75 via-transparent to-transparent" />
         <span className="absolute bottom-2 left-3 text-3xl font-black text-white drop-shadow">{r.logo}</span>
@@ -204,8 +263,8 @@ export function TiffinService() {
         ))}
       </div>
 
-      <Section title={`${segment} Tiffin Plans`}>
-        <div className="grid gap-4 md:grid-cols-3">{plans.map((p) => <PlanCard key={p.id} plan={p} />)}</div>
+      <Section title={`${segment} Tiffin Plans`} action={<span className="text-xs font-bold text-[#8a7477]">{plans.length} plans available</span>}>
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">{plans.map((p) => <PlanCard key={p.id} plan={p} />)}</div>
       </Section>
 
       <Section title="How It Works">
@@ -249,7 +308,7 @@ export function PlanDetail() {
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div>
           <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-wine-800 to-chaskaa-700 p-6 text-white">
-            <img src={plan.segment === 'Student' ? planImages.Student : planImages.Corporate} alt="" className="absolute inset-0 h-full w-full object-cover opacity-35" />
+            <img src={plan.image || (plan.segment === 'Student' ? planImages.Student : planImages.Corporate)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-35" />
             <span className="absolute inset-0 bg-gradient-to-r from-[#51010e]/95 via-[#730216]/75 to-[#b00528]/45" />
             <div className="relative">
               <div className="flex flex-wrap items-center gap-2"><Badge className="!bg-white/15 !text-white">{plan.segment} TIFFIN</Badge><Badge className="!bg-white/15 !text-white">{plan.badge}</Badge></div>
@@ -289,13 +348,20 @@ export function Restaurants() {
   const [params] = useSearchParams();
   const [q, setQ] = useState(params.get('q') || '');
   const [filter, setFilter] = useState('All');
-  const list = restaurants.filter((r) => `${r.name} ${r.tags} ${r.menu.map((m) => m.name).join(' ')}`.toLowerCase().includes(q.toLowerCase()));
+  const filters = ['All', 'Tiffin', 'North Indian', 'Chinese', 'Biryani', 'Fast Food', 'Desserts', 'Offers'];
+  const matchesFilter = (r) => {
+    if (filter === 'All') return true;
+    if (filter === 'Tiffin') return r.tags.toLowerCase().includes('tiffin');
+    if (filter === 'Offers') return Boolean(r.offer);
+    return `${r.tags} ${r.menu.map((m) => `${m.name} ${m.category}`).join(' ')}`.toLowerCase().includes(filter.toLowerCase());
+  };
+  const list = restaurants.filter((r) => `${r.name} ${r.tags} ${r.menu.map((m) => `${m.name} ${m.category}`).join(' ')}`.toLowerCase().includes(q.toLowerCase()) && matchesFilter(r));
   return (
     <div className="fade-in">
       <div className="mb-5"><h1 className="text-2xl font-extrabold text-[#2b1d20]">Restaurants near you</h1><p className="text-xs text-[#8a7477]">Sushant Golf City, Lucknow · {list.length} places delivering</p></div>
-      <div className="mb-5 flex flex-wrap gap-2">{['All', 'Tiffin', 'Veg', 'Fast Food', 'Offers'].map((f) => <button key={f} onClick={() => setFilter(f)} className={`rounded-full px-3.5 py-2 text-xs font-bold ${filter === f ? 'bg-chaskaa-600 text-white' : 'border border-[#eadddd] bg-white text-[#6d585b]'}`}>{f}</button>)}</div>
+      <div className="mb-5 flex flex-wrap gap-2">{filters.map((f) => <button key={f} onClick={() => setFilter(f)} className={`rounded-full px-3.5 py-2 text-xs font-bold transition ${filter === f ? 'bg-chaskaa-600 text-white shadow-card' : 'border border-[#eadddd] bg-white text-[#6d585b] hover:border-chaskaa-200'}`}>{f}</button>)}</div>
       <div className="relative mb-6"><Icon name="Search" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b09b9d]" /><input className="input pl-9" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search restaurants or dishes..." /></div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{list.map((r) => <RestaurantCard key={r.id} r={r} />)}</div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">{list.map((r) => <RestaurantCard key={r.id} r={r} />)}</div>
       {!list.length && <div className="card mt-6 p-10 text-center text-sm text-[#8a7477]">No restaurants found for “{q}”. Try another search.</div>}
       <button onClick={() => navigate('/customer/tiffin')} className="relative mt-8 w-full overflow-hidden rounded-2xl bg-gradient-to-r from-wine-800 to-chaskaa-700 p-5 text-left text-white shadow-float">
         <img src="/img/hero-tiffin.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-35" />
@@ -326,7 +392,7 @@ export function RestaurantDetail() {
       {tab === 'Offers' && <div className="card mb-5 p-5"><p className="font-extrabold">{r.offer}</p><p className="mt-1 text-xs text-[#8a7477]">Auto-applied at checkout where eligible.</p></div>}
       {tab === 'About' && <div className="card mb-5 p-5 text-xs leading-relaxed text-[#6d585b]">{r.name} is a trusted Chaskaa partner known for {r.tags.toLowerCase()}. All orders are packed hygienically and delivered fresh.</div>}
       {tab === 'Menu' && <Section title={`Menu (${r.menu.length})`}>
-        <div className="grid gap-3 md:grid-cols-2">{r.menu.map((m) => (
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">{r.menu.map((m) => (
           <div key={m.id} className="flex gap-4 rounded-2xl border border-[#f6e4ea] bg-white p-3 shadow-card sm:p-4">
             <img src={dishImage(m.name, m.category)} alt={m.name} loading="lazy" className="h-20 w-20 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24" />
             <div className="min-w-0 flex-1">

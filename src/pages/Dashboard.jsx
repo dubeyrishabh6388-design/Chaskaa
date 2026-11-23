@@ -4,6 +4,8 @@ import {
   Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from 'recharts';
 import { dashboardStats, orderStates, ordersByService, platformPerformance, serviceMix, topLocations } from '../data/mockData';
+import { popularDishes } from '../data/customerData';
+import { dishImage } from '../data/images';
 import { managementModules } from '../data/navigation';
 import { useApp } from '../store/AppContext';
 import { Badge, Card, Icon, ProgressBar, StatCard } from '../components/ui';
@@ -70,6 +72,19 @@ export default function Dashboard() {
           );
         })}
       </div>
+
+      {/* Trending dishes */}
+      <Card title="Trending Dishes" subtitle="What customers are ordering right now"
+        action={<button onClick={() => navigate('/customer/restaurants')} className="text-xs font-bold text-chaskaa-600 hover:underline">View menu →</button>}>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          {popularDishes.slice(0, 5).map((d) => (
+            <button key={d.id} onClick={() => navigate('/customer/restaurants')} className="group overflow-hidden rounded-xl border border-[#f0e7e7] bg-white text-left transition hover:-translate-y-0.5 hover:shadow-card">
+              <div className="h-24 overflow-hidden"><img src={dishImage(d.name, d.category)} alt={d.name} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" /></div>
+              <div className="p-2.5"><p className="truncate text-[11px] font-bold text-[#2b1d20]">{d.name}</p><p className="mt-0.5 truncate text-[10px] text-[#968486]">{d.vendor}</p><p className="mt-1 text-xs font-extrabold text-chaskaa-600">₹{d.price} <span className="text-[10px] text-amber-500">★ {d.rating}</span></p></div>
+            </button>
+          ))}
+        </div>
+      </Card>
 
       {/* Chart + pipeline */}
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1.85fr)_minmax(300px,1fr)]">
