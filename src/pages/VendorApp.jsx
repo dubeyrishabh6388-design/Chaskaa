@@ -56,7 +56,7 @@ export function VendorLayout() {
           ))}
         </nav>
         <div className="space-y-1 border-t border-white/10 p-3">
-          <NavLink to="/" className="flex items-center justify-center gap-2 rounded-xl bg-white/10 py-2.5 text-[11px] font-bold text-white/80 hover:bg-white/20">Switch to Admin Console ↗</NavLink>
+          <NavLink to="/login?role=admin" className="flex items-center justify-center gap-2 rounded-xl bg-white/10 py-2.5 text-[11px] font-bold text-white/80 hover:bg-white/20">Switch account / Sign in ↗</NavLink>
           <LogoutButton variant="sidebar" />
         </div>
       </aside>

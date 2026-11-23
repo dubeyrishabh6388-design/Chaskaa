@@ -9,9 +9,9 @@ npm install
 npm run dev
 ```
 
-Open **http://localhost:5173** — a portal links to a single unified login page (`/login`). On that page, click the big demo ID button (unlocks all workspaces) or any role card to enter instantly. Manual sign-in works too: select account type → any email/password → MFA code `123456`. Direct URLs without a session redirect to `/login?next=...`.
+Open **http://localhost:5173** — the app opens directly on the unified login page (no landing/portal screen). On that page, click the big demo ID button (unlocks all workspaces) or any role card to enter instantly. Manual sign-in works too: select account type → any email/password → MFA code `123456`. Direct URLs without a session redirect to `/login?next=...`.
 
-A portal links to all three apps:
+The unified login leads to all three workspaces:
 
 | Workspace | URL | What it covers |
 | --- | --- | --- |

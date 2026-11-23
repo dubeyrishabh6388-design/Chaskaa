@@ -625,7 +625,7 @@ export function CustomerProfile() {
       </div>
       <div className="mt-5 card p-5"><p className="text-xs font-bold text-[#8a7477]">Delivery address</p><p className="mt-1 text-sm font-bold">{address.line}</p><p className="text-xs text-[#8a7477]">{address.city} – {address.pincode}</p></div>
       <div className="mt-5 grid gap-2 sm:grid-cols-2">{links.map(([label, icon, path]) => <button key={label} onClick={() => navigate(path)} className="flex items-center gap-3 rounded-xl border border-[#f6e4ea] bg-white p-4 text-left transition hover:border-chaskaa-200 hover:shadow-card"><span className="grid h-9 w-9 place-items-center rounded-lg bg-chaskaa-50 text-chaskaa-600"><Icon name={icon} size={17} /></span><span className="flex-1 text-xs font-extrabold text-[#4a3438]">{label}</span><Icon name="ChevronRight" size={15} className="text-[#b09b9d]" /></button>)}</div>
-      <button onClick={() => navigate('/')} className="mt-6 w-full rounded-xl border border-dashed border-chaskaa-300 bg-chaskaa-50/50 py-3 text-xs font-extrabold text-chaskaa-700">Switch workspace / All apps ↗</button>
+      <button onClick={() => navigate('/login')} className="mt-6 w-full rounded-xl border border-dashed border-chaskaa-300 bg-chaskaa-50/50 py-3 text-xs font-extrabold text-chaskaa-700">Switch account / Sign in ↗</button>
       <div className="mt-3 flex w-full items-center justify-center rounded-xl border border-[#f0e2df] bg-white py-3 text-xs font-extrabold text-rose-600 hover:bg-rose-50">
         <LogoutButton variant="link" className="!text-rose-600" />
       </div>
