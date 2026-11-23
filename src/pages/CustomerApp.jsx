@@ -279,7 +279,20 @@ export function TiffinService() {
       </Section>
 
       <Section title="Sample Weekly Menu">
-        <div className="overflow-x-auto rounded-2xl border border-[#f6e4ea] bg-white">
+        <div className="grid gap-2 sm:hidden">
+          {weeklyMenu.map((m) => (
+            <div key={m.day} className="rounded-2xl border border-[#f6e4ea] bg-white p-3 shadow-card">
+              <p className="mb-2 text-xs font-extrabold text-chaskaa-700">{m.day}</p>
+              {[['Lunch', m.lunch], ['Dinner', m.dinner]].map(([meal, text]) => (
+                <div key={meal} className="mt-1.5 flex items-center gap-2 rounded-xl bg-[#fdf7f6] p-2">
+                  <img src={dishImage(text)} alt="" loading="lazy" className="h-9 w-9 shrink-0 rounded-lg object-cover" />
+                  <span className="min-w-0 flex-1"><span className="block text-[9px] font-bold uppercase tracking-wide text-[#a89598]">{meal}</span><span className="block truncate text-[11px] font-bold text-[#4a3438]">{text}</span></span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div className="hidden overflow-x-auto rounded-2xl border border-[#f6e4ea] bg-white sm:block">
           <table className="w-full min-w-[640px] text-left text-xs">
             <thead className="bg-[#fdf2f4] text-[#8a7477]"><tr><th className="p-3">Day</th><th className="p-3">Lunch</th><th className="p-3">Dinner</th></tr></thead>
             <tbody className="divide-y divide-[#f6eae7]">{weeklyMenu.map((m) => <tr key={m.day}><td className="p-3 font-extrabold text-chaskaa-700">{m.day}</td><td className="p-3"><span className="flex items-center gap-2 text-[#4a3438]"><img src={dishImage(m.lunch)} alt="" loading="lazy" className="h-8 w-8 shrink-0 rounded-md object-cover" />{m.lunch}</span></td><td className="p-3"><span className="flex items-center gap-2 text-[#4a3438]"><img src={dishImage(m.dinner)} alt="" loading="lazy" className="h-8 w-8 shrink-0 rounded-md object-cover" />{m.dinner}</span></td></tr>)}</tbody>
@@ -376,10 +389,9 @@ export function Restaurants() {
 export function RestaurantDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart, cart } = useApp();
+  const { addToCart } = useApp();
   const r = restaurants.find((x) => x.id === id) || restaurants[0];
   const [tab, setTab] = useState('Menu');
-  const cartCount = cart.reduce((a, c) => a + c.qty, 0);
   return (
     <div className="fade-in">
       <div className="mb-5 flex items-center gap-2 text-xs font-bold text-chaskaa-600"><button onClick={() => navigate('/customer/restaurants')}><Icon name="ArrowLeft" size={14} /></button> All restaurants</div>
@@ -405,7 +417,6 @@ export function RestaurantDetail() {
           </div>
         ))}</div>
       </Section>}
-      {cartCount > 0 && <button onClick={() => navigate('/customer/cart')} className="fixed bottom-20 left-1/2 z-30 flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 items-center justify-between rounded-xl bg-chaskaa-600 px-5 py-3.5 text-sm font-extrabold text-white shadow-float lg:bottom-6"><span>{cartCount} item{cartCount > 1 ? 's' : ''} in cart</span><span className="flex items-center gap-1">View Cart <Icon name="ArrowRight" size={15} /></span></button>}
     </div>
   );
 }
@@ -430,20 +441,26 @@ export function Cart() {
       <h1 className="mb-5 text-2xl font-extrabold text-[#2b1d20]">My Cart ({cart.reduce((a, c) => a + c.qty, 0)})</h1>
       {!cart.length ? <div className="card p-12 text-center"><span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-chaskaa-50 text-chaskaa-600"><Icon name="ShoppingBag" size={24} /></span><p className="mt-4 font-extrabold">Your cart is empty</p><p className="mt-1 text-xs text-[#8a7477]">Add items from a restaurant to get started.</p><button className="btn-primary mt-5" onClick={() => navigate('/customer/restaurants')}>Browse restaurants</button></div> : (
         <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-          <div className="card p-5">
+          <div className="card min-w-0 p-5">
             <p className="mb-4 text-xs font-bold text-[#8a7477]">Items from {cart[0]?.vendor}</p>
             <div className="space-y-4">{cart.map((i) => (
-              <div key={i.id} className="flex items-center gap-4 border-b border-[#f6eae7] pb-4 last:border-0">
+              <div key={i.id} className="flex gap-3 border-b border-[#f6eae7] pb-4 last:border-0 sm:gap-4">
                 <img src={dishImage(i.name, i.category)} alt={i.name} className="h-14 w-14 shrink-0 rounded-xl object-cover" />
-                <div className="min-w-0 flex-1"><p className="text-sm font-extrabold">{i.name}</p><p className="text-[11px] text-[#8a7477]">{inr(i.price)} each</p></div>
-                <div className="flex items-center gap-2 rounded-lg border border-[#eadddd] p-1"><button className="grid h-7 w-7 place-items-center rounded-md text-chaskaa-600 hover:bg-chaskaa-50" onClick={() => updateCartQty(i.id, i.qty - 1)}><Icon name="Minus" size={14} /></button><span className="w-5 text-center text-xs font-extrabold">{i.qty}</span><button className="grid h-7 w-7 place-items-center rounded-md text-chaskaa-600 hover:bg-chaskaa-50" onClick={() => updateCartQty(i.id, i.qty + 1)}><Icon name="Plus" size={14} /></button></div>
-                <p className="w-16 text-right text-sm font-extrabold">{inr(i.price * i.qty)}</p>
-                <button className="text-[#b09b9d] hover:text-rose-600" onClick={() => removeFromCart(i.id)}><Icon name="Trash2" size={15} /></button>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0"><p className="text-sm font-extrabold">{i.name}</p><p className="text-[11px] text-[#8a7477]">{inr(i.price)} each</p></div>
+                    <button className="shrink-0 text-[#b09b9d] hover:text-rose-600" onClick={() => removeFromCart(i.id)} aria-label="Remove item"><Icon name="Trash2" size={15} /></button>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 rounded-lg border border-[#eadddd] p-1"><button className="grid h-7 w-7 place-items-center rounded-md text-chaskaa-600 hover:bg-chaskaa-50" onClick={() => updateCartQty(i.id, i.qty - 1)} aria-label="Decrease quantity"><Icon name="Minus" size={14} /></button><span className="w-5 text-center text-xs font-extrabold">{i.qty}</span><button className="grid h-7 w-7 place-items-center rounded-md text-chaskaa-600 hover:bg-chaskaa-50" onClick={() => updateCartQty(i.id, i.qty + 1)} aria-label="Increase quantity"><Icon name="Plus" size={14} /></button></div>
+                    <p className="text-sm font-extrabold">{inr(i.price * i.qty)}</p>
+                  </div>
+                </div>
               </div>
             ))}</div>
             <button className="mt-4 text-xs font-bold text-chaskaa-600" onClick={() => navigate('/customer/restaurants')}>+ Add more items from this restaurant</button>
           </div>
-          <div className="card h-fit p-5">
+          <div className="card h-fit min-w-0 p-5">
             <p className="mb-4 text-sm font-extrabold">Bill Details</p>
             <div className="space-y-2 text-xs">{[['Items Total', b.subtotal], ['Packing Charges', b.packing], ['Delivery Fee', b.delivery], ['Offer Discount (CHASKAA30)', -b.discount], ['Taxes (GST 5%)', b.tax]].map(([l, v]) => <div key={l} className="flex justify-between"><span className="text-[#8a7477]">{l}</span><b className={v < 0 ? 'text-emerald-600' : ''}>{v < 0 ? '−' : ''}{inr(Math.abs(v))}</b></div>)}</div>
             <div className="mt-4 flex justify-between border-t border-dashed border-[#eadddd] pt-4 text-sm font-extrabold"><span>Total Payable</span><span className="text-chaskaa-600">{inr(b.total)}</span></div>

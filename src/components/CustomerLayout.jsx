@@ -27,6 +27,8 @@ export default function CustomerLayout() {
   const location = useLocation();
   const [query, setQuery] = useState('');
   const cartCount = cart.reduce((a, c) => a + c.qty, 0);
+  const cartTotal = cart.reduce((a, c) => a + c.price * c.qty, 0);
+  const hideCartBar = ['/customer/cart', '/customer/checkout'].includes(location.pathname) || location.pathname.startsWith('/customer/success');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -38,7 +40,7 @@ export default function CustomerLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fff9f6] pb-20 lg:pb-0">
+    <div className="min-h-screen bg-[#fff9f6] pb-[calc(170px+var(--safe-b))] lg:pb-0">
       <div className="h-1 bg-active-nav" />
 
       <header className="sticky top-0 z-40 border-b border-[#f4e3e0] bg-white/95 backdrop-blur-md">
@@ -65,7 +67,8 @@ export default function CustomerLayout() {
             <Icon name="ShoppingBag" size={18} />
             {cartCount > 0 && <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-chaskaa-600 px-1 text-[9px] font-bold text-white ring-2 ring-white">{cartCount}</span>}
           </button>
-          <LogoutButton variant="text" />
+          <span className="hidden sm:block"><LogoutButton variant="text" /></span>
+          <span className="sm:hidden"><LogoutButton variant="icon" /></span>
           <button onClick={() => navigate('/dashboard')} className="hidden rounded-xl border border-[#f0dfdc] px-3 py-2 text-[11px] font-bold text-[#8a7477] hover:border-chaskaa-300 hover:text-chaskaa-600 xl:block">Admin console ↗</button>
         </div>
 
@@ -85,6 +88,19 @@ export default function CustomerLayout() {
           <div className="mt-3 flex justify-center"><LogoutButton variant="link" /></div>
         </footer>
       </main>
+
+      {cartCount > 0 && !hideCartBar && (
+        <button onClick={() => navigate('/customer/cart')}
+          className="fixed bottom-[calc(82px+var(--safe-b))] left-3 right-3 z-30 flex items-center gap-2.5 rounded-2xl border border-white/10 bg-[#51010e] px-3 py-2.5 text-left text-white shadow-float transition active:scale-[.99] lg:bottom-6 lg:left-1/2 lg:right-auto lg:w-[420px] lg:-translate-x-1/2 lg:rounded-xl lg:px-4">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white/15"><Icon name="ShoppingBag" size={17} /></span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[11px] font-extrabold">{cartCount} item{cartCount > 1 ? 's' : ''} in cart</span>
+            <span className="block truncate text-[10px] text-white/65">{cart.map((i) => i.name).join(', ')}</span>
+          </span>
+          <span className="shrink-0 text-sm font-extrabold">₹{cartTotal.toLocaleString('en-IN')}</span>
+          <span className="hidden shrink-0 items-center gap-1 rounded-lg bg-white px-2.5 py-1.5 text-[10px] font-extrabold text-chaskaa-700 sm:flex">View cart <Icon name="ArrowRight" size={12} /></span>
+        </button>
+      )}
 
       <nav className="fixed bottom-0 left-0 right-0 z-40 grid grid-cols-5 border-t border-[#f1e1de] bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden">
         {navItems.map((n) => (

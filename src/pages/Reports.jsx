@@ -76,7 +76,7 @@ export default function Reports() {
         </Card>
       </div>
 
-      <div className="mt-5 grid gap-5 lg:grid-cols-2">
+      <div className="mt-5 grid gap-5 lg:grid-cols-2 [&>*]:min-w-0">
         <Card title="Zone performance" subtitle="Orders, on-time rate and revenue by cluster" noPad><div className="p-5 pt-0">
           <DataTable search={false} columns={[
             { key: 'zone', label: 'Zone', render: (z) => <span className="font-bold">{z.zone}</span> },

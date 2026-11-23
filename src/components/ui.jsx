@@ -271,7 +271,7 @@ export function Toggle({ checked, onChange, label }) {
 export function Toast({ toast }) {
   if (!toast) return null;
   return (
-    <div className="fixed bottom-5 right-5 z-[80] flex items-center gap-3 rounded-xl bg-[#2b1d20] px-4 py-3 text-sm font-semibold text-white shadow-2xl fade-in">
+    <div className="fixed bottom-[calc(150px+var(--safe-b))] left-3 right-3 z-[80] flex items-center gap-3 rounded-xl bg-[#2b1d20] px-4 py-3 text-sm font-semibold text-white shadow-2xl fade-in lg:bottom-5 lg:left-auto lg:right-5">
       <span className="grid h-6 w-6 place-items-center rounded-full bg-emerald-500"><Icon name="Check" size={14} /></span>
       {toast.message}
     </div>

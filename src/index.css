@@ -5,6 +5,9 @@
 :root {
   --wine: #51010e;
   --chaskaa: #b00528;
+  /* Bottom inset used by the mobile nav, floating cart bar and toast so they
+     never collide with each other or the iPhone home indicator. */
+  --safe-b: env(safe-area-inset-bottom, 0px);
 }
 
 * { -webkit-tap-highlight-color: transparent; }
@@ -54,8 +57,16 @@ body {
   }
 }
 
+/* Opacity-only on purpose: a `transform` on an ancestor turns it into the
+   containing block for `position: fixed` children, which breaks sticky
+   cart bars / toasts on mobile. Use .rise-in where a slide is really needed. */
 .fade-in { animation: fadeIn .35s ease both; }
 @keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.rise-in { animation: riseIn .35s ease both; }
+@keyframes riseIn {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }

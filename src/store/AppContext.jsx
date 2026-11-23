@@ -138,7 +138,7 @@ export function AppProvider({ children }) {
     notify,
   };
 
-  const value = useMemo(() => ({ ...state, ...actions }), [state]);
+  const value = useMemo(() => ({ ...state, ...actions, toast }), [state, toast]);
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

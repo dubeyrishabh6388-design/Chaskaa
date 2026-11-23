@@ -78,7 +78,7 @@ export function VendorLayout() {
           </footer>
         </main>
       </div>
-      {toast && <div className="fixed bottom-5 right-5 z-[80] flex items-center gap-3 rounded-xl bg-[#2b1d20] px-4 py-3 text-sm font-semibold text-white shadow-2xl fade-in"><span className="grid h-6 w-6 place-items-center rounded-full bg-emerald-500"><Icon name="Check" size={14} /></span>{toast.message}</div>}
+      {toast && <div className="fixed bottom-5 left-3 right-3 z-[80] flex items-center gap-3 rounded-xl bg-[#2b1d20] px-4 py-3 text-sm font-semibold text-white shadow-2xl fade-in sm:left-auto sm:right-5"><span className="grid h-6 w-6 place-items-center rounded-full bg-emerald-500"><Icon name="Check" size={14} /></span>{toast.message}</div>}
     </div>
   );
 }
@@ -401,7 +401,7 @@ export function VendorEarnings() {
         <MiniStat label="Net earnings" value="₹1,07,780" icon="Wallet" tone="green" />
         <MiniStat label="Next settlement" value="₹38,392" sub="22 Nov 2026" icon="CalendarCheck" />
       </div>
-      <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr] [&>*]:min-w-0">
         <Card title="Settlements" subtitle="Payout history and upcoming transfers" noPad><div className="p-5 pt-0">
           <DataTable search={false} columns={[
             { key: 'id', label: 'Settlement', render: (s) => <b className="text-chaskaa-700">{s.id}</b> },
@@ -464,7 +464,7 @@ export function VendorStaff() {
   return (
     <div className="fade-in">
       <PageHeader eyebrow="Business" title="Staff & Support" subtitle="Manage outlet staff permissions and resolve support tickets." />
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-2 [&>*]:min-w-0">
         <Card title="Staff users" subtitle="Kitchen staff cannot change bank or contract details" action={<button className="btn-soft !py-2 !text-xs" onClick={() => notify('Staff invitation sent')}><Icon name="Plus" size={14} /> Add staff</button>} noPad><div className="p-5 pt-0">
           <DataTable search={false} columns={[
             { key: 'name', label: 'Name', render: (s) => <div className="flex items-center gap-2"><Avatar name={s.name} size="sm" /><b>{s.name}</b></div> },
