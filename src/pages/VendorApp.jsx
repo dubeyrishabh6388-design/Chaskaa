@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { kitchenManifest, tiffinPlans } from '../data/mockData';
+import { dishImage, planImages } from '../data/images';
 import { useApp } from '../store/AppContext';
 import { Avatar, Badge, Card, DataTable, EmptyState, Field, Icon, Modal, PageHeader, ProgressBar, Toggle, statusTone } from '../components/ui';
 import LogoutButton from '../components/LogoutButton';
@@ -144,13 +145,17 @@ export function VendorDashboard() {
           </div>
         </Card>
         <Card title="Tiffin operations" subtitle="Tomorrow's production" action={<button className="text-xs font-bold text-chaskaa-600" onClick={() => navigate('/vendor/tiffin')}>Manage →</button>}>
-          <div className="mb-4 rounded-xl bg-gradient-to-br from-wine-800 to-chaskaa-700 p-4 text-white"><p className="text-[10px] uppercase tracking-wide text-white/60">Meals to pack</p><p className="mt-1 text-3xl font-extrabold">184</p><p className="text-[10px] text-white/70">Lunch 96 · Dinner 88 · 3 zones</p></div>
-          <div className="space-y-2">{tiffinPlans.slice(0, 3).map((p) => <div key={p.id} className="flex items-center justify-between rounded-lg bg-[#fdf8f8] p-2.5 text-[11px]"><span className="font-bold">{p.name}</span><span className="font-extrabold text-chaskaa-600">{p.booked} packs</span></div>)}</div>
+          <div className="mb-4 relative overflow-hidden rounded-xl bg-gradient-to-br from-wine-800 to-chaskaa-700 p-4 text-white">
+            <img src="/img/hero-tiffin.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-35" />
+            <span className="absolute inset-0 bg-gradient-to-r from-[#51010e]/90 to-[#b00528]/50" />
+            <div className="relative"><p className="text-[10px] uppercase tracking-wide text-white/60">Meals to pack</p><p className="mt-1 text-3xl font-extrabold">184</p><p className="text-[10px] text-white/70">Lunch 96 · Dinner 88 · 3 zones</p></div>
+          </div>
+          <div className="space-y-2">{tiffinPlans.slice(0, 3).map((p) => <div key={p.id} className="flex items-center gap-2 rounded-lg bg-[#fdf8f8] p-2 text-[11px]"><img src={p.segment === 'Corporate' ? planImages.Corporate : planImages.Student} alt="" className="h-8 w-8 shrink-0 rounded-md object-cover" /><span className="min-w-0 flex-1 truncate font-bold">{p.name}</span><span className="font-extrabold text-chaskaa-600">{p.booked} packs</span></div>)}</div>
         </Card>
       </div>
       <div className="mt-5 grid gap-5 lg:grid-cols-2">
         <Card title="Top selling items" subtitle="This week">
-          <div className="space-y-3">{initialMenu.slice().sort((a, b) => b.orders - a.orders).slice(0, 4).map((m) => <div key={m.id} className="flex items-center gap-3"><div className="min-w-0 flex-1"><div className="mb-1 flex justify-between text-[11px]"><span className="truncate font-bold">{m.name}</span><span className="text-[#8a7477]">{m.orders} orders</span></div><ProgressBar value={(m.orders / 312) * 100} /></div></div>)}</div>
+          <div className="space-y-3">{initialMenu.slice().sort((a, b) => b.orders - a.orders).slice(0, 4).map((m) => <div key={m.id} className="flex items-center gap-3"><img src={dishImage(m.name, m.category)} alt="" className="h-9 w-9 shrink-0 rounded-lg object-cover" /><div className="min-w-0 flex-1"><div className="mb-1 flex justify-between text-[11px]"><span className="truncate font-bold">{m.name}</span><span className="text-[#8a7477]">{m.orders} orders</span></div><ProgressBar value={(m.orders / 312) * 100} /></div></div>)}</div>
         </Card>
         <Card title="Attention needed" subtitle="Resolve these to keep your ratings high">
           <div className="space-y-2">{[
@@ -193,7 +198,7 @@ export function VendorOrders() {
                     <div className="flex items-center justify-between"><span className="text-xs font-extrabold text-chaskaa-700">#{o.id}</span><Badge tone={tone} dot>{o.slot}</Badge></div>
                     <p className="mt-2 text-sm font-bold text-[#2b1d20]">{o.customer}</p>
                     <p className="text-[10px] text-[#8a7477]">{o.phone}</p>
-                    <p className="mt-2 text-[11px] text-[#6d585b]">{o.items}</p>
+                    <div className="mt-2 flex items-center gap-2 text-[11px] text-[#6d585b]"><img src={dishImage(o.items)} alt="" className="h-7 w-7 shrink-0 rounded-md object-cover" /><span className="truncate">{o.items}</span></div>
                     <div className="mt-3 flex items-center justify-between border-t border-[#f6eae7] pt-3"><span className="text-xs font-extrabold">{inr(o.amount)}</span><span className="text-[10px] text-[#8a7477]">{o.time}</span></div>
                     <div className="mt-3 flex gap-2">
                       <button className="btn-soft flex-1 !py-2 !text-[11px]" onClick={() => setView(o)}>Details</button>
@@ -213,7 +218,7 @@ export function VendorOrders() {
           <DataTable searchPlaceholder="Search order, customer or phone…" columns={[
             { key: 'id', label: 'Order', render: (o) => <span className="font-bold text-chaskaa-700">#{o.id}</span> },
             { key: 'customer', label: 'Customer', render: (o) => <span>{o.customer}<span className="block text-[11px] text-[#968486]">{o.phone}</span></span> },
-            { key: 'items', label: 'Items' }, { key: 'amount', label: 'Amount', sortable: true },
+            { key: 'items', label: 'Items', render: (o) => <span className="flex items-center gap-2"><img src={dishImage(o.items)} alt="" className="h-8 w-8 shrink-0 rounded-md object-cover" /><span className="truncate">{o.items}</span></span> }, { key: 'amount', label: 'Amount', sortable: true },
             { key: 'slot', label: 'Type' }, { key: 'time', label: 'Time' },
             { key: 'status', label: 'Status', render: (o) => <Badge tone={statusTone(o.status)} dot>{o.status}</Badge> },
             { key: 'action', label: 'Action', render: (o) => <div onClick={(e) => e.stopPropagation()}><button className="btn-ghost !px-2 !py-1 !text-[11px]" onClick={() => setView(o)}>View</button></div> },
@@ -262,7 +267,7 @@ export function VendorMenu() {
       </div>
       <Card title={`Items · ${filtered.length}`} subtitle="Toggle stock instantly — unavailable items are hidden from customers" noPad><div className="p-5 pt-0">
         <DataTable searchPlaceholder="Search dish or category…" columns={[
-          { key: 'name', label: 'Item', render: (m) => <span className="flex items-center gap-2"><span className={`h-3 w-3 rounded-sm border-2 ${m.veg ? 'border-emerald-600 bg-emerald-100' : 'border-rose-600 bg-rose-100'}`} /><span className="font-bold">{m.name}</span></span> },
+          { key: 'name', label: 'Item', render: (m) => <span className="flex items-center gap-2"><img src={dishImage(m.name, m.category)} alt="" className="h-9 w-9 shrink-0 rounded-lg object-cover" /><span className={`h-3 w-3 shrink-0 rounded-sm border-2 ${m.veg ? 'border-emerald-600 bg-emerald-100' : 'border-rose-600 bg-rose-100'}`} /><span className="font-bold">{m.name}</span></span> },
           { key: 'category', label: 'Category' },
           { key: 'price', label: 'Price', sortable: true, render: (m) => inr(m.price) },
           { key: 'orders', label: 'Orders', sortable: true },
@@ -273,6 +278,7 @@ export function VendorMenu() {
       <Modal open={!!editing} onClose={() => setEditing(null)} title={editing?.id ? 'Edit item' : 'Add new item'} subtitle="Changes appear on your storefront immediately"
         footer={<><button className="btn-ghost" onClick={() => setEditing(null)}>Cancel</button><button className="btn-primary" onClick={save}>Save item</button></>}>
         <div className="space-y-4">
+          {form.name && <img src={dishImage(form.name, form.category)} alt={form.name} className="h-32 w-full rounded-xl object-cover" />}
           <Field label="Item name"><input className="input" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="e.g. Paneer Butter Masala" /></Field>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Category"><select className="input" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>{['Main Course', 'Thali', 'Rice', 'Breads', 'Desserts', 'Fast Food', 'Beverages'].map((c) => <option key={c}>{c}</option>)}</select></Field>
@@ -310,7 +316,7 @@ export function VendorTiffin() {
 
       {tab === 'Plans' && <Card title="Your tiffin plans" subtitle="Prices, capacity and cutoffs synced with the platform" noPad><div className="p-5 pt-0">
         <DataTable searchPlaceholder="Search plans…" columns={[
-          { key: 'name', label: 'Plan', render: (p) => <span className="font-bold">{p.name}<span className="block text-[11px] font-normal text-[#968486]">{p.id}</span></span> },
+          { key: 'name', label: 'Plan', render: (p) => <span className="flex items-center gap-2"><img src={p.segment === 'Corporate' ? planImages.Corporate : planImages.Student} alt="" className="h-9 w-9 shrink-0 rounded-lg object-cover" /><span className="font-bold">{p.name}<span className="block text-[11px] font-normal text-[#968486]">{p.id}</span></span></span> },
           { key: 'segment', label: 'Segment', render: (p) => <Badge tone={p.segment === 'Student' ? 'amber' : 'purple'}>{p.segment}</Badge> },
           { key: 'price', label: 'Price', sortable: true }, { key: 'meal', label: 'Meal' },
           { key: 'capacity', label: 'Capacity', render: (p) => <div className="w-28"><div className="mb-1 text-[10px] font-semibold">{p.booked}/{p.capacity}</div><ProgressBar value={(p.booked / p.capacity) * 100} /></div> },
@@ -320,7 +326,7 @@ export function VendorTiffin() {
 
       {tab === 'Tomorrow count' && <Card title="Production count · 21 Nov 2026" subtitle="Aggregated by meal slot and plan">
         <div className="grid gap-3 sm:grid-cols-3">{[['Lunch', 96, 'bg-chaskaa-500'], ['Dinner', 88, 'bg-wine-600'], ['Both slots', 184, 'bg-emerald-500']].map(([l, v, tone]) => <div key={l} className="rounded-xl border border-[#f2eaea] p-4"><p className="text-[11px] font-semibold text-[#8a7477]">{l}</p><p className="mt-1 text-3xl font-extrabold text-[#2b1d20]">{v}</p><div className="mt-2"><ProgressBar value={(v / 184) * 100} tone={tone} /></div></div>)}</div>
-        <div className="mt-5 space-y-2">{tiffinPlans.map((p) => <div key={p.id} className="flex items-center justify-between rounded-xl bg-[#fdf8f8] p-3 text-xs"><span className="font-bold">{p.name}</span><span className="font-extrabold text-chaskaa-600">{Math.round(p.booked / 3)} packs</span></div>)}</div>
+        <div className="mt-5 space-y-2">{tiffinPlans.map((p) => <div key={p.id} className="flex items-center gap-3 rounded-xl bg-[#fdf8f8] p-3 text-xs"><img src={p.segment === 'Corporate' ? planImages.Corporate : planImages.Student} alt="" className="h-9 w-9 shrink-0 rounded-lg object-cover" /><span className="flex-1 font-bold">{p.name}</span><span className="font-extrabold text-chaskaa-600">{Math.round(p.booked / 3)} packs</span></div>)}</div>
       </Card>}
 
       {tab === 'Packing list' && <Card title="Today's packing list" subtitle="Print labels with customer name, slot and meal type" action={<button className="btn-soft !py-2 !text-xs" onClick={() => notify('Labels sent to printer')}><Icon name="FileText" size={14} /> Print labels</button>} noPad><div className="p-5 pt-0">
@@ -369,7 +375,7 @@ export function VendorOffers() {
       <Card title="Your offers" subtitle="Coordinate with platform coupons — stacked discounts are validated server-side" noPad><div className="p-5 pt-0">
         <DataTable searchPlaceholder="Search offers…" columns={[
           { key: 'code', label: 'Code', render: (o) => <span className="rounded-lg bg-chaskaa-50 px-2 py-1 font-mono text-xs font-extrabold text-chaskaa-700">{o.code}</span> },
-          { key: 'title', label: 'Offer', render: (o) => <b>{o.title}</b> }, { key: 'type', label: 'Type' }, { key: 'min', label: 'Min order' }, { key: 'valid', label: 'Validity' },
+          { key: 'title', label: 'Offer', render: (o) => <span className="flex items-center gap-2"><img src={dishImage(o.title)} alt="" className="h-9 w-9 shrink-0 rounded-lg object-cover" /><b>{o.title}</b></span> }, { key: 'type', label: 'Type' }, { key: 'min', label: 'Min order' }, { key: 'valid', label: 'Validity' },
           { key: 'status', label: 'Status', render: (o) => <Badge tone={statusTone(o.status)} dot>{o.status}</Badge> },
           { key: 'action', label: 'Action', render: (o) => <div onClick={(e) => e.stopPropagation()}><button className="btn-ghost !px-2 !py-1 !text-[11px]" onClick={() => { setOffers((prev) => prev.map((x) => x.id === o.id ? { ...x, status: x.status === 'Active' ? 'Expired' : 'Active' } : x)); notify(o.status === 'Active' ? 'Offer paused' : 'Offer enabled'); }}>{o.status === 'Active' ? 'Pause' : 'Enable'}</button></div> },
         ]} rows={offers} />

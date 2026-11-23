@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { auditLogs, banners, companies, coupons, payments, refunds, settlements, staffRoles, users } from '../data/mockData';
+import { bannerImageFor } from '../data/images';
 import { useApp } from '../store/AppContext';
 import { Avatar, Badge, Card, DataTable, Field, Icon, Modal, PageHeader, ProgressBar, Toggle, statusTone } from '../components/ui';
 
@@ -113,7 +114,7 @@ export function Marketing() {
       </div></Card>}
       {tab === 'Banners' && <Card title="Banner campaigns" subtitle="Home and Tiffin placement inventory" noPad><div className="p-5 pt-0">
         <DataTable searchPlaceholder="Search banners…" columns={[
-          { key: 'id', label: 'ID' }, { key: 'title', label: 'Banner', render: (b) => <span className="font-bold">{b.title}</span> },
+          { key: 'id', label: 'ID' }, { key: 'title', label: 'Banner', render: (b) => <span className="flex items-center gap-2"><img src={bannerImageFor(b)} alt="" className="h-9 w-16 shrink-0 rounded-md object-cover" /><span className="font-bold">{b.title}</span></span> },
           { key: 'position', label: 'Position' }, { key: 'zone', label: 'Zone' },
           { key: 'clicks', label: 'Clicks', sortable: true, render: (b) => b.clicks.toLocaleString('en-IN') },
           { key: 'status', label: 'Status', render: (b) => <Badge tone={statusTone(b.status)} dot>{b.status}</Badge> },

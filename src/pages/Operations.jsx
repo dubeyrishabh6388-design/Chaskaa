@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { kitchenManifest, tiffinPlans } from '../data/mockData';
+import { dishImage, planImages, vendorImage } from '../data/images';
 import { useApp } from '../store/AppContext';
-import { Avatar, Badge, Card, DataTable, Field, Icon, Modal, PageHeader, ProgressBar, statusTone } from '../components/ui';
+import { Badge, Card, DataTable, Field, Icon, Modal, PageHeader, ProgressBar, statusTone } from '../components/ui';
 
 const MiniStat = ({ label, value, tone = 'red' }) => (
   <div className="card p-4">
@@ -37,7 +38,7 @@ export function Vendors() {
         <div className="p-5 pt-0">
           <DataTable searchPlaceholder="Search vendor, owner, city or ID…"
             columns={[
-              { key: 'name', label: 'Vendor', sortable: true, render: (v) => <div className="flex items-center gap-3"><Avatar name={v.name} /><div><p className="font-bold text-[#2b1d20]">{v.name}</p><p className="text-[11px] text-[#968486]">{v.id} · {v.city}</p></div></div> },
+              { key: 'name', label: 'Vendor', sortable: true, render: (v) => <div className="flex items-center gap-3"><img src={vendorImage(v.name)} alt="" className="h-10 w-10 shrink-0 rounded-lg object-cover" /><div><p className="font-bold text-[#2b1d20]">{v.name}</p><p className="text-[11px] text-[#968486]">{v.id} · {v.city}</p></div></div> },
               { key: 'type', label: 'Type' },
               { key: 'owner', label: 'Owner', render: (v) => <span>{v.owner}<span className="block text-[11px] text-[#968486]">{v.area}</span></span> },
               { key: 'rating', label: 'Rating', sortable: true, render: (v) => <span className="flex items-center gap-1 font-semibold"><Icon name="Star" size={13} className="fill-amber-400 text-amber-400" /> {v.rating}</span> },
@@ -63,6 +64,7 @@ export function Vendors() {
           {view?.status === 'Pending' && <button className="btn-primary" onClick={() => { setVendorStatus(view.id, 'Approved'); setView(null); }}>Approve vendor</button>}
         </>}>
         {view && <div className="space-y-4">
+          <img src={vendorImage(view.name)} alt={view.name} className="h-36 w-full rounded-xl object-cover" />
           <div className="grid grid-cols-2 gap-3 text-xs">
             {[['Owner', view.owner], ['Area', view.area], ['Rating', `★ ${view.rating}`], ['Total orders', view.orders], ['GSTIN', view.gst], ['FSSAI', view.fssai], ['Joined', view.joined], ['Status', view.status]].map(([k, val]) => (
               <div key={k} className="rounded-xl bg-[#fdf8f8] p-3"><p className="text-[10px] font-semibold uppercase tracking-wide text-[#968486]">{k}</p><p className="mt-1 font-bold text-[#2b1d20]">{val}</p></div>
@@ -117,7 +119,7 @@ export function Orders() {
             columns={[
               { key: 'id', label: 'Order', sortable: true, render: (o) => <span className="font-bold text-chaskaa-700">#{o.id}</span> },
               { key: 'customer', label: 'Customer', render: (o) => <span>{o.customer}<span className="block text-[11px] text-[#968486]">{o.phone}</span></span> },
-              { key: 'vendor', label: 'Vendor' },
+              { key: 'vendor', label: 'Vendor', render: (o) => <span className="flex items-center gap-2"><img src={dishImage(o.items)} alt="" className="h-8 w-8 shrink-0 rounded-md object-cover" /><span className="truncate">{o.vendor}</span></span> },
               { key: 'type', label: 'Service', render: (o) => <Badge tone={o.type === 'Food' ? 'red' : o.type === 'Corporate' ? 'purple' : 'amber'}>{o.type}</Badge> },
               { key: 'amount', label: 'Amount', sortable: true },
               { key: 'status', label: 'Status', render: (o) => <Badge tone={statusTone(o.status)} dot>{o.status}</Badge> },
@@ -142,6 +144,7 @@ export function Orders() {
       <Modal open={!!view} onClose={() => setView(null)} title={view ? `Order #${view.id}` : ''} subtitle={view ? `${view.customer} · ${view.time}` : ''}
         footer={<><button className="btn-ghost" onClick={() => setView(null)}>Close</button>{view && !['Delivered', 'Cancelled'].includes(view.status) && <button className="btn-primary" onClick={() => { setOrderStatus(view.id, 'Delivered'); setView(null); }}>Mark delivered</button>}</>}>
         {view && <div className="space-y-4">
+          <img src={dishImage(view.items)} alt="" className="h-36 w-full rounded-xl object-cover" />
           <div className="grid grid-cols-2 gap-3 text-xs">
             {[['Vendor', view.vendor], ['Items', view.items], ['Amount', view.amount], ['Payment', view.payment], ['Zone', view.zone], ['Rider', view.rider]].map(([k, v]) => <div key={k} className="rounded-xl bg-[#fdf8f8] p-3"><p className="text-[10px] uppercase tracking-wide text-[#968486]">{k}</p><p className="mt-1 font-bold text-[#2b1d20]">{v}</p></div>)}
           </div>
@@ -179,7 +182,7 @@ export function Subscriptions() {
             columns={[
               { key: 'id', label: 'Subscription', render: (s) => <span className="font-bold text-chaskaa-700">{s.id}</span> },
               { key: 'customer', label: 'Customer' },
-              { key: 'plan', label: 'Plan', render: (s) => <span>{s.plan}<span className="block text-[11px] text-[#968486]">{s.vendor}</span></span> },
+              { key: 'plan', label: 'Plan', render: (s) => <span className="flex items-center gap-2"><img src={s.segment === 'Corporate' ? planImages.Corporate : planImages.Student} alt="" className="h-8 w-8 shrink-0 rounded-md object-cover" /><span>{s.plan}<span className="block text-[11px] text-[#968486]">{s.vendor}</span></span></span> },
               { key: 'segment', label: 'Segment', render: (s) => <Badge tone={s.segment === 'Student' ? 'amber' : 'purple'}>{s.segment}</Badge> },
               { key: 'duration', label: 'Duration' },
               { key: 'amount', label: 'Amount', sortable: true },
@@ -214,7 +217,7 @@ export function Tiffin() {
       {tab === 'Plans' && <Card title="Tiffin plans" subtitle="Audience, price versions, capacity and cutoffs" noPad><div className="p-5 pt-0">
         <DataTable searchPlaceholder="Search plans, vendors or segment…"
           columns={[
-            { key: 'name', label: 'Plan', render: (p) => <span className="font-bold text-[#2b1d20]">{p.name}<span className="block text-[11px] font-normal text-[#968486]">{p.id} · {p.vendor}</span></span> },
+            { key: 'name', label: 'Plan', render: (p) => <span className="flex items-center gap-2"><img src={p.segment === 'Corporate' ? planImages.Corporate : planImages.Student} alt="" className="h-9 w-9 shrink-0 rounded-lg object-cover" /><span className="font-bold text-[#2b1d20]">{p.name}<span className="block text-[11px] font-normal text-[#968486]">{p.id} · {p.vendor}</span></span></span> },
             { key: 'segment', label: 'Segment', render: (p) => <Badge tone={p.segment === 'Student' ? 'amber' : 'purple'}>{p.segment}</Badge> },
             { key: 'meal', label: 'Meals' },
             { key: 'price', label: 'Price', sortable: true },

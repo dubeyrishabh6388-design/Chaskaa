@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { categories, customerBanners, paymentMethods, restaurants, tiffinPlansCustomer, weeklyMenu } from '../data/customerData';
+import { bannerImages, categoryImages, dishImage, planImages, restaurantImage } from '../data/images';
 import { useApp } from '../store/AppContext';
 import { Badge, Icon } from '../components/ui';
 import LogoutButton from '../components/LogoutButton';
@@ -79,7 +80,9 @@ export function CustomerHome() {
       <div className="mb-8 grid gap-3 sm:grid-cols-3">
         {customerBanners.map((b) => (
           <button key={b.id} onClick={() => navigate(b.id === 1 ? '/customer/restaurants' : '/customer/tiffin')}
-            className={`relative overflow-hidden rounded-2xl p-5 text-left text-white shadow-card ${b.tone === 'amber' ? 'bg-gradient-to-br from-amber-500 to-amber-700' : b.tone === 'wine' ? 'bg-gradient-to-br from-wine-700 to-wine-900' : 'bg-gradient-to-br from-chaskaa-500 to-chaskaa-700'}`}>
+            className="relative min-h-[116px] overflow-hidden rounded-2xl p-5 text-left text-white shadow-card transition hover:-translate-y-0.5 hover:shadow-float">
+            <img src={bannerImages[b.id]} alt="" className="absolute inset-0 h-full w-full object-cover" />
+            <span className="absolute inset-0 bg-gradient-to-r from-[#51010e]/95 via-[#730216]/80 to-[#b00528]/35" />
             <span className="absolute -right-6 -top-8 h-28 w-28 rounded-full bg-white/10" />
             <p className="relative text-lg font-extrabold leading-tight">{b.title}</p>
             <p className="relative mt-1 text-[11px] text-white/80">{b.sub}</p>
@@ -91,16 +94,18 @@ export function CustomerHome() {
       <Section title="What's on your mind?" action={<button className="text-xs font-bold text-chaskaa-600" onClick={() => navigate('/customer/restaurants')}>See all →</button>}>
         <div className="grid grid-cols-4 gap-3 sm:grid-cols-7">
           {categories.map((c) => (
-            <button key={c.name} onClick={() => navigate('/customer/restaurants')} className="flex flex-col items-center gap-2 rounded-2xl border border-[#f2e1de] bg-white p-3 transition hover:-translate-y-0.5 hover:border-chaskaa-200 hover:shadow-card">
-              <span className="grid h-11 w-11 place-items-center rounded-xl bg-chaskaa-50 text-chaskaa-600"><Icon name={c.icon} size={20} /></span>
+            <button key={c.name} onClick={() => navigate('/customer/restaurants')} className="group flex flex-col items-center gap-2 rounded-2xl border border-[#f2e1de] bg-white p-2.5 transition hover:-translate-y-0.5 hover:border-chaskaa-200 hover:shadow-card">
+              <img src={categoryImages[c.name]} alt={c.name} loading="lazy" className="h-12 w-12 rounded-xl object-cover shadow-sm transition duration-300 group-hover:scale-105 sm:h-16 sm:w-16" />
               <span className="text-[10px] font-bold text-[#6d585b]">{c.name}</span>
             </button>
           ))}
         </div>
       </Section>
 
-      <section className="mb-8 overflow-hidden rounded-2xl bg-gradient-to-br from-wine-800 via-wine-700 to-chaskaa-700 p-6 text-white shadow-float">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <section className="relative mb-8 overflow-hidden rounded-2xl bg-gradient-to-br from-wine-800 via-wine-700 to-chaskaa-700 p-6 text-white shadow-float">
+        <img src="/img/hero-tiffin.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+        <span className="absolute inset-0 bg-gradient-to-r from-[#51010e]/95 via-[#730216]/80 to-[#b00528]/45" />
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
           <div>
             <Badge className="!bg-white/15 !text-white">TIFFIN SERVICE</Badge>
             <h2 className="mt-3 text-2xl font-extrabold sm:text-3xl">Healthy. Home Style. On Time.</h2>
@@ -109,10 +114,10 @@ export function CustomerHome() {
           </div>
           <button onClick={() => navigate('/customer/tiffin')} className="rounded-xl bg-white px-5 py-3 text-sm font-extrabold text-chaskaa-700 shadow-lg transition hover:-translate-y-0.5">Subscribe Now →</button>
         </div>
-        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <div className="relative z-10 mt-6 grid gap-3 sm:grid-cols-2">
           {['Student — Affordable & Nutritious Meal Plans', 'Corporate — Premium & Hygienic Meal Plans'].map((t, i) => (
             <button key={t} onClick={() => { setSegment(i ? 'Corporate' : 'Student'); navigate('/customer/tiffin'); }} className="flex items-center gap-3 rounded-xl bg-white/10 p-4 text-left ring-1 ring-white/15 backdrop-blur transition hover:bg-white/20">
-              <span className="grid h-10 w-10 place-items-center rounded-lg bg-white/15"><Icon name={i ? 'Store' : 'LunchBox'} size={19} /></span>
+              <img src={i ? planImages.Corporate : planImages.Student} alt="" className="h-10 w-10 rounded-lg object-cover" />
               <span className="flex-1 text-xs font-bold">{t}</span><Icon name="ArrowRight" size={15} />
             </button>
           ))}
@@ -137,13 +142,19 @@ export function CustomerHome() {
 function PlanCard({ plan }) {
   const navigate = useNavigate();
   return (
-    <button onClick={() => navigate(`/customer/plans/${plan.id}`)} className="group rounded-2xl border border-[#f6e4ea] bg-white p-4 text-left shadow-card transition hover:-translate-y-0.5 hover:border-chaskaa-300 hover:shadow-float">
-      <div className="flex items-start justify-between"><span className={`chip ${plan.segment === 'Student' ? 'bg-amber-50 text-amber-700' : 'bg-violet-50 text-violet-700'}`}>{plan.segment}</span><span className="chip bg-chaskaa-50 text-chaskaa-700">{plan.badge}</span></div>
-      <p className="mt-4 text-base font-extrabold text-[#2b1d20]">{plan.name}</p>
-      <p className="text-xs text-[#8a7477]">{plan.duration} · {plan.meals}</p>
+    <button onClick={() => navigate(`/customer/plans/${plan.id}`)} className="group overflow-hidden rounded-2xl border border-[#f6e4ea] bg-white text-left shadow-card transition hover:-translate-y-0.5 hover:border-chaskaa-300 hover:shadow-float">
+      <div className="relative h-24 overflow-hidden">
+        <img src={plan.segment === 'Student' ? planImages.Student : planImages.Corporate} alt={plan.name} loading="lazy" className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+        <span className="absolute inset-0 bg-gradient-to-t from-[#51010e]/60 to-transparent" />
+        <span className="absolute bottom-2 left-3 text-sm font-extrabold text-white">{plan.name}</span>
+      </div>
+      <div className="p-4">
+        <div className="flex items-start justify-between"><span className={`chip ${plan.segment === 'Student' ? 'bg-amber-50 text-amber-700' : 'bg-violet-50 text-violet-700'}`}>{plan.segment}</span><span className="chip bg-chaskaa-50 text-chaskaa-700">{plan.badge}</span></div>
+        <p className="mt-3 text-xs text-[#8a7477]">{plan.duration} · {plan.meals}</p>
       <p className="mt-3 text-2xl font-extrabold text-chaskaa-600">₹{plan.price}<span className="text-[11px] font-semibold text-[#8a7477]"> {plan.unit}</span></p>
       <div className="mt-3 flex flex-wrap gap-1.5">{plan.highlights.slice(0, 2).map((h) => <span key={h} className="rounded-full bg-[#fdf2f4] px-2 py-1 text-[10px] font-semibold text-[#8a7477]">{h}</span>)}</div>
       <span className="mt-4 inline-flex items-center gap-1 text-xs font-extrabold text-chaskaa-600 group-hover:gap-2">View details <Icon name="ArrowRight" size={13} /></span>
+      </div>
     </button>
   );
 }
@@ -152,8 +163,10 @@ function RestaurantCard({ r }) {
   const navigate = useNavigate();
   return (
     <button onClick={() => navigate(`/customer/restaurants/${r.id}`)} className="overflow-hidden rounded-2xl border border-[#f6e4ea] bg-white text-left shadow-card transition hover:-translate-y-0.5 hover:shadow-float">
-      <div className={`relative flex h-32 items-center justify-center bg-gradient-to-br ${r.color} text-white`}>
-        <span className="text-4xl font-black opacity-90">{r.logo}</span>
+      <div className="relative h-32 overflow-hidden">
+        <img src={restaurantImage(r)} alt={r.name} loading="lazy" className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+        <span className="absolute inset-0 bg-gradient-to-t from-[#51010e]/75 via-transparent to-transparent" />
+        <span className="absolute bottom-2 left-3 text-3xl font-black text-white drop-shadow">{r.logo}</span>
         <span className="absolute bottom-2 right-2 rounded-lg bg-white/95 px-2 py-1 text-[10px] font-extrabold text-[#2b1d20]">{r.eta}</span>
       </div>
       <div className="p-3.5">
@@ -172,15 +185,19 @@ export function TiffinService() {
   const plans = tiffinPlansCustomer.filter((p) => p.segment === segment);
   return (
     <div className="fade-in">
-      <div className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-wine-800 to-chaskaa-700 p-6 text-white">
-        <p className="text-[11px] font-bold uppercase tracking-widest text-white/60">Tiffin Service</p>
+      <div className="relative mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-wine-800 to-chaskaa-700 p-6 text-white">
+        <img src="/img/hero-tiffin.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+        <span className="absolute inset-0 bg-gradient-to-r from-[#51010e]/95 via-[#730216]/80 to-[#b00528]/45" />
+        <div className="relative">
+          <p className="text-[11px] font-bold uppercase tracking-widest text-white/60">Tiffin Service</p>
         <h1 className="mt-1 text-2xl font-extrabold sm:text-3xl">Healthy Hygienic · Homemade</h1>
         <p className="mt-1 text-xs text-white/75">Fresh & pocket-friendly meal plans for every day.</p>
+        </div>
       </div>
       <div className="mb-6 grid grid-cols-2 gap-3">
         {[['Student', 'Affordable & Nutritious Meal Plans', 'LunchBox'], ['Corporate', 'Premium & Hygienic Meal Plans', 'Store']].map(([name, desc, icon]) => (
           <button key={name} onClick={() => setSegment(name)} className={`rounded-2xl border-2 p-4 text-left transition ${segment === name ? 'border-chaskaa-500 bg-chaskaa-50 shadow-card' : 'border-[#f6e4ea] bg-white hover:border-chaskaa-200'}`}>
-            <span className={`grid h-10 w-10 place-items-center rounded-xl ${segment === name ? 'bg-chaskaa-600 text-white' : 'bg-[#fdf2f4] text-chaskaa-600'}`}><Icon name={icon} size={19} /></span>
+            <img src={name === 'Student' ? planImages.Student : planImages.Corporate} alt="" className={`h-10 w-10 rounded-xl object-cover ${segment === name ? 'ring-2 ring-white/60' : ''}`} />
             <p className="mt-3 text-sm font-extrabold text-[#2b1d20]">{name}</p>
             <p className="mt-0.5 text-[10px] text-[#8a7477]">{desc}</p>
           </button>
@@ -206,7 +223,7 @@ export function TiffinService() {
         <div className="overflow-x-auto rounded-2xl border border-[#f6e4ea] bg-white">
           <table className="w-full min-w-[640px] text-left text-xs">
             <thead className="bg-[#fdf2f4] text-[#8a7477]"><tr><th className="p-3">Day</th><th className="p-3">Lunch</th><th className="p-3">Dinner</th></tr></thead>
-            <tbody className="divide-y divide-[#f6eae7]">{weeklyMenu.map((m) => <tr key={m.day}><td className="p-3 font-extrabold text-chaskaa-700">{m.day}</td><td className="p-3 text-[#4a3438]">{m.lunch}</td><td className="p-3 text-[#4a3438]">{m.dinner}</td></tr>)}</tbody>
+            <tbody className="divide-y divide-[#f6eae7]">{weeklyMenu.map((m) => <tr key={m.day}><td className="p-3 font-extrabold text-chaskaa-700">{m.day}</td><td className="p-3"><span className="flex items-center gap-2 text-[#4a3438]"><img src={dishImage(m.lunch)} alt="" loading="lazy" className="h-8 w-8 shrink-0 rounded-md object-cover" />{m.lunch}</span></td><td className="p-3"><span className="flex items-center gap-2 text-[#4a3438]"><img src={dishImage(m.dinner)} alt="" loading="lazy" className="h-8 w-8 shrink-0 rounded-md object-cover" />{m.dinner}</span></td></tr>)}</tbody>
           </table>
         </div>
       </Section>
@@ -231,15 +248,19 @@ export function PlanDetail() {
       <button className="mb-4 flex items-center gap-1 text-xs font-bold text-chaskaa-600" onClick={() => navigate('/customer/tiffin')}><Icon name="ArrowLeft" size={14} /> All plans</button>
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div>
-          <div className="rounded-2xl bg-gradient-to-br from-wine-800 to-chaskaa-700 p-6 text-white">
-            <div className="flex flex-wrap items-center gap-2"><Badge className="!bg-white/15 !text-white">{plan.segment} TIFFIN</Badge><Badge className="!bg-white/15 !text-white">{plan.badge}</Badge></div>
-            <h1 className="mt-4 text-3xl font-extrabold">{plan.name} Tiffin Plan</h1>
-            <p className="mt-1 text-sm text-white/75">{plan.duration} · {plan.meals}</p>
-            <p className="mt-5 text-4xl font-extrabold">₹{plan.price.toLocaleString('en-IN')} <span className="text-sm font-semibold text-white/70">{plan.unit}</span></p>
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-wine-800 to-chaskaa-700 p-6 text-white">
+            <img src={plan.segment === 'Student' ? planImages.Student : planImages.Corporate} alt="" className="absolute inset-0 h-full w-full object-cover opacity-35" />
+            <span className="absolute inset-0 bg-gradient-to-r from-[#51010e]/95 via-[#730216]/75 to-[#b00528]/45" />
+            <div className="relative">
+              <div className="flex flex-wrap items-center gap-2"><Badge className="!bg-white/15 !text-white">{plan.segment} TIFFIN</Badge><Badge className="!bg-white/15 !text-white">{plan.badge}</Badge></div>
+              <h1 className="mt-4 text-3xl font-extrabold">{plan.name} Tiffin Plan</h1>
+              <p className="mt-1 text-sm text-white/75">{plan.duration} · {plan.meals}</p>
+              <p className="mt-5 text-4xl font-extrabold">₹{plan.price.toLocaleString('en-IN')} <span className="text-sm font-semibold text-white/70">{plan.unit}</span></p>
+            </div>
           </div>
           <Section title="Plan Inclusions"><div className="grid gap-3 sm:grid-cols-2">{plan.highlights.map((h) => <div key={h} className="flex items-center gap-3 rounded-xl border border-[#f6e4ea] bg-white p-4"><span className="grid h-9 w-9 place-items-center rounded-lg bg-emerald-50 text-emerald-600"><Icon name="Check" size={16} /></span><span className="text-xs font-bold text-[#4a3438]">{h}</span></div>)}</div></Section>
           <Section title="Sample Weekly Menu">
-            <div className="grid gap-2 sm:grid-cols-2">{plan.menu.map((m) => <div key={m} className="flex items-center gap-2 rounded-xl bg-white p-3 text-xs font-semibold text-[#4a3438] shadow-card"><Icon name="CheckCircle2" size={15} className="text-chaskaa-500" /> {m}</div>)}</div>
+            <div className="grid gap-2 sm:grid-cols-2">{plan.menu.map((m) => <div key={m} className="flex items-center gap-2 rounded-xl bg-white p-2 text-xs font-semibold text-[#4a3438] shadow-card"><img src={dishImage(m)} alt="" loading="lazy" className="h-8 w-8 shrink-0 rounded-md object-cover" /><Icon name="CheckCircle2" size={15} className="text-chaskaa-500" /> {m}</div>)}</div>
           </Section>
         </div>
         <div className="space-y-4">
@@ -276,7 +297,11 @@ export function Restaurants() {
       <div className="relative mb-6"><Icon name="Search" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b09b9d]" /><input className="input pl-9" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search restaurants or dishes..." /></div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{list.map((r) => <RestaurantCard key={r.id} r={r} />)}</div>
       {!list.length && <div className="card mt-6 p-10 text-center text-sm text-[#8a7477]">No restaurants found for “{q}”. Try another search.</div>}
-      <button onClick={() => navigate('/customer/tiffin')} className="mt-8 w-full rounded-2xl bg-gradient-to-r from-wine-800 to-chaskaa-700 p-5 text-left text-white shadow-float"><p className="text-lg font-extrabold">Looking for daily tiffin?</p><p className="mt-1 text-xs text-white/75">Explore student and corporate meal plans →</p></button>
+      <button onClick={() => navigate('/customer/tiffin')} className="relative mt-8 w-full overflow-hidden rounded-2xl bg-gradient-to-r from-wine-800 to-chaskaa-700 p-5 text-left text-white shadow-float">
+        <img src="/img/hero-tiffin.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-35" />
+        <span className="absolute inset-0 bg-gradient-to-r from-[#51010e]/95 via-[#730216]/80 to-[#b00528]/45" />
+        <div className="relative"><p className="text-lg font-extrabold">Looking for daily tiffin?</p><p className="mt-1 text-xs text-white/75">Explore student and corporate meal plans →</p></div>
+      </button>
     </div>
   );
 }
@@ -292,15 +317,18 @@ export function RestaurantDetail() {
   return (
     <div className="fade-in">
       <div className="mb-5 flex items-center gap-2 text-xs font-bold text-chaskaa-600"><button onClick={() => navigate('/customer/restaurants')}><Icon name="ArrowLeft" size={14} /></button> All restaurants</div>
-      <div className={`mb-6 overflow-hidden rounded-2xl bg-gradient-to-br ${r.color} p-6 text-white shadow-float`}>
-        <div className="flex items-center gap-4"><span className="grid h-16 w-16 place-items-center rounded-2xl bg-white/20 text-2xl font-black">{r.logo}</span><div><h1 className="text-2xl font-extrabold">{r.name}</h1><p className="text-xs text-white/80">{r.tags}</p><p className="mt-1 text-xs">{r.eta} · {r.distance} · ★ {r.rating} ({r.ratings})</p></div></div>
+      <div className="relative mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-wine-800 to-chaskaa-700 p-6 text-white shadow-float">
+        <img src={restaurantImage(r)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+        <span className="absolute inset-0 bg-gradient-to-r from-[#51010e]/95 via-[#730216]/80 to-[#b00528]/45" />
+        <div className="relative flex items-center gap-4"><span className="grid h-16 w-16 place-items-center rounded-2xl bg-white/20 text-2xl font-black backdrop-blur">{r.logo}</span><div><h1 className="text-2xl font-extrabold">{r.name}</h1><p className="text-xs text-white/80">{r.tags}</p><p className="mt-1 text-xs">{r.eta} · {r.distance} · ★ {r.rating} ({r.ratings})</p></div></div>
       </div>
       <div className="mb-5 flex gap-2">{['Menu', 'Offers', 'Tiffin Plans', 'About'].map((t) => <button key={t} onClick={() => setTab(t === 'Tiffin Plans' ? navigate('/customer/tiffin') : setTab(t))} className={`rounded-full px-4 py-2 text-xs font-bold ${tab === t ? 'bg-chaskaa-600 text-white' : 'border border-[#eadddd] bg-white text-[#6d585b]'}`}>{t}</button>)}</div>
       {tab === 'Offers' && <div className="card mb-5 p-5"><p className="font-extrabold">{r.offer}</p><p className="mt-1 text-xs text-[#8a7477]">Auto-applied at checkout where eligible.</p></div>}
       {tab === 'About' && <div className="card mb-5 p-5 text-xs leading-relaxed text-[#6d585b]">{r.name} is a trusted Chaskaa partner known for {r.tags.toLowerCase()}. All orders are packed hygienically and delivered fresh.</div>}
       {tab === 'Menu' && <Section title={`Menu (${r.menu.length})`}>
         <div className="grid gap-3 md:grid-cols-2">{r.menu.map((m) => (
-          <div key={m.id} className="flex gap-4 rounded-2xl border border-[#f6e4ea] bg-white p-4 shadow-card">
+          <div key={m.id} className="flex gap-4 rounded-2xl border border-[#f6e4ea] bg-white p-3 shadow-card sm:p-4">
+            <img src={dishImage(m.name, m.category)} alt={m.name} loading="lazy" className="h-20 w-20 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24" />
             <div className="min-w-0 flex-1">
               <span className={`mb-1 inline-block h-3 w-3 rounded-sm border-2 ${m.veg ? 'border-emerald-600 bg-emerald-100' : 'border-rose-600 bg-rose-100'}`} />
               <p className="text-sm font-extrabold text-[#2b1d20]">{m.name}</p>
@@ -340,6 +368,7 @@ export function Cart() {
             <p className="mb-4 text-xs font-bold text-[#8a7477]">Items from {cart[0]?.vendor}</p>
             <div className="space-y-4">{cart.map((i) => (
               <div key={i.id} className="flex items-center gap-4 border-b border-[#f6eae7] pb-4 last:border-0">
+                <img src={dishImage(i.name, i.category)} alt={i.name} className="h-14 w-14 shrink-0 rounded-xl object-cover" />
                 <div className="min-w-0 flex-1"><p className="text-sm font-extrabold">{i.name}</p><p className="text-[11px] text-[#8a7477]">{inr(i.price)} each</p></div>
                 <div className="flex items-center gap-2 rounded-lg border border-[#eadddd] p-1"><button className="grid h-7 w-7 place-items-center rounded-md text-chaskaa-600 hover:bg-chaskaa-50" onClick={() => updateCartQty(i.id, i.qty - 1)}><Icon name="Minus" size={14} /></button><span className="w-5 text-center text-xs font-extrabold">{i.qty}</span><button className="grid h-7 w-7 place-items-center rounded-md text-chaskaa-600 hover:bg-chaskaa-50" onClick={() => updateCartQty(i.id, i.qty + 1)}><Icon name="Plus" size={14} /></button></div>
                 <p className="w-16 text-right text-sm font-extrabold">{inr(i.price * i.qty)}</p>
@@ -391,6 +420,7 @@ export function Checkout() {
         </div>
         <div className="card h-fit p-5">
           <p className="mb-4 text-sm font-extrabold">Payment Summary</p>
+          <div className="mb-4 flex flex-wrap gap-2 border-b border-[#f6eae7] pb-4">{cart.map((i) => <img key={i.id} src={dishImage(i.name, i.category)} alt={i.name} title={i.name} className="h-12 w-12 rounded-lg object-cover" />)}</div>
           <div className="space-y-2 text-xs">{[['Items Total', b.subtotal], ['Packing Charges', b.packing], ['Delivery Fee', b.delivery], [`Offer Discount (${offer})`, -b.discount], ['Taxes (GST 5%)', b.tax]].map(([l, v]) => <div key={l} className="flex justify-between"><span className="text-[#8a7477]">{l}</span><b className={v < 0 ? 'text-emerald-600' : ''}>{v < 0 ? '−' : ''}{inr(Math.abs(v))}</b></div>)}</div>
           <div className="mt-4 flex justify-between border-t border-dashed border-[#eadddd] pt-4 text-base font-extrabold"><span>Total Payable</span><span className="text-chaskaa-600">{inr(b.total)}</span></div>
           <button className="btn-primary mt-5 w-full !py-3" onClick={pay}>Pay {inr(b.total)} Now →</button>
@@ -410,6 +440,7 @@ export function OrderSuccess() {
       <h1 className="mt-6 text-2xl font-extrabold text-[#2b1d20]">Order Placed Successfully!</h1>
       <p className="mt-2 text-sm text-[#8a7477]">Your order <b className="text-chaskaa-600">#{id}</b> has been placed. We're getting it ready fresh for you.</p>
       <div className="card mt-7 p-5 text-left">
+        <img src="/img/hero-food.jpg" alt="" className="mb-4 h-28 w-full rounded-xl object-cover object-center" />
         <div className="flex justify-between text-xs"><span className="text-[#8a7477]">Order Type</span><b>Food Delivery</b></div>
         <div className="mt-3 flex justify-between text-xs"><span className="text-[#8a7477]">Estimated Delivery</span><b className="text-emerald-600">25–30 mins</b></div>
       </div>
@@ -460,10 +491,13 @@ export function CustomerOrders() {
       <div className="mb-4 grid grid-cols-2 gap-2 rounded-xl bg-white p-1 shadow-card">{['Food Orders', 'Tiffin Plans'].map((t) => <button key={t} onClick={() => setType(t)} className={`rounded-lg py-2.5 text-xs font-extrabold ${type === t ? 'bg-chaskaa-600 text-white' : 'text-[#8a7477]'}`}>{t}</button>)}</div>
       <div className="mb-5 flex gap-2">{['Ongoing', 'Completed', 'Cancelled', 'All'].map((s) => <button key={s} onClick={() => setStatus(s)} className={`rounded-full px-3 py-1.5 text-[11px] font-bold ${status === s ? 'bg-chaskaa-50 text-chaskaa-700 ring-1 ring-chaskaa-200' : 'text-[#8a7477]'}`}>{s}</button>)}</div>
       <div className="space-y-3">{rows.length ? rows.map((o) => (
-        <div key={o.id} className="card p-5">
-          <div className="flex items-start justify-between gap-3"><div><p className="text-sm font-extrabold">{o.vendor}</p><p className="mt-0.5 text-[11px] text-[#8a7477]">Order #{o.id} · {o.placed}</p></div><Badge tone={o.status === 'Delivered' ? 'green' : o.status === 'Cancelled' ? 'red' : 'amber'} dot>{o.status}</Badge></div>
-          <p className="mt-3 text-xs text-[#6d585b]">{o.items}</p>
-          <div className="mt-4 flex items-center justify-between border-t border-[#f6eae7] pt-3"><p className="text-sm font-extrabold">{inr(o.total)}</p><button className="text-xs font-extrabold text-chaskaa-600" onClick={() => navigate(`/customer/track/${o.id}`)}>{o.status === 'Delivered' ? 'View Details →' : 'Track Order →'}</button></div>
+        <div key={o.id} className="card flex gap-4 p-4 sm:p-5">
+          <img src={dishImage(o.items)} alt="" loading="lazy" className="h-16 w-16 shrink-0 rounded-xl object-cover sm:h-20 sm:w-20" />
+          <div className="min-w-0 flex-1">
+            <div className="flex items-start justify-between gap-3"><div><p className="text-sm font-extrabold">{o.vendor}</p><p className="mt-0.5 text-[11px] text-[#8a7477]">Order #{o.id} · {o.placed}</p></div><Badge tone={o.status === 'Delivered' ? 'green' : o.status === 'Cancelled' ? 'red' : 'amber'} dot>{o.status}</Badge></div>
+            <p className="mt-3 text-xs text-[#6d585b]">{o.items}</p>
+            <div className="mt-4 flex items-center justify-between border-t border-[#f6eae7] pt-3"><p className="text-sm font-extrabold">{inr(o.total)}</p><button className="text-xs font-extrabold text-chaskaa-600" onClick={() => navigate(`/customer/track/${o.id}`)}>{o.status === 'Delivered' ? 'View Details →' : 'Track Order →'}</button></div>
+          </div>
         </div>
       )) : <div className="card p-10 text-center text-sm text-[#8a7477]">No {status.toLowerCase()} orders here yet.</div>}</div>
     </div>
@@ -477,10 +511,13 @@ export function CustomerSubscriptions() {
     <div className="fade-in">
       <div className="mb-5 flex items-center justify-between"><h1 className="text-2xl font-extrabold text-[#2b1d20]">My Subscriptions</h1><button className="btn-primary !py-2 !text-xs" onClick={() => navigate('/customer/tiffin')}>Browse plans</button></div>
       <div className="space-y-4">{mySubscriptions.map((s) => (
-        <div key={s.id} className="card p-5">
-          <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-base font-extrabold">{s.plan}</p><p className="text-[11px] text-[#8a7477]">{s.vendor} · {s.id}</p></div><Badge tone={s.status === 'Active' ? 'green' : 'amber'} dot>{s.status}</Badge></div>
-          <div className="mt-4 grid grid-cols-2 gap-3 text-xs sm:grid-cols-4">{[['Duration', s.duration], ['Meals', s.meals], ['Start', s.start], ['Valid till', s.end]].map(([k, v]) => <div key={k} className="rounded-xl bg-[#fdf2f4] p-3"><p className="text-[10px] font-semibold text-[#8a7477]">{k}</p><p className="mt-0.5 font-extrabold">{v}</p></div>)}</div>
-          <div className="mt-4 flex flex-wrap items-center gap-2"><button className="btn-soft !py-2 !text-xs" onClick={() => toggleMySubscription(s.id)}>{s.status === 'Paused' ? 'Resume plan' : 'Pause plan'}</button><button className="btn-ghost !py-2 !text-xs" onClick={() => navigate('/customer/tiffin')}>Change plan</button><span className="ml-auto text-sm font-extrabold text-chaskaa-600">{inr(s.price)}</span></div>
+        <div key={s.id} className="card flex gap-4 p-4 sm:p-5">
+          <img src={s.plan.toLowerCase().includes('corporate') ? planImages.Corporate : planImages.Student} alt="" loading="lazy" className="h-16 w-16 shrink-0 rounded-xl object-cover sm:h-20 sm:w-20" />
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-base font-extrabold">{s.plan}</p><p className="text-[11px] text-[#8a7477]">{s.vendor} · {s.id}</p></div><Badge tone={s.status === 'Active' ? 'green' : 'amber'} dot>{s.status}</Badge></div>
+            <div className="mt-4 grid grid-cols-2 gap-3 text-xs sm:grid-cols-4">{[['Duration', s.duration], ['Meals', s.meals], ['Start', s.start], ['Valid till', s.end]].map(([k, v]) => <div key={k} className="rounded-xl bg-[#fdf2f4] p-3"><p className="text-[10px] font-semibold text-[#8a7477]">{k}</p><p className="mt-0.5 font-extrabold">{v}</p></div>)}</div>
+            <div className="mt-4 flex flex-wrap items-center gap-2"><button className="btn-soft !py-2 !text-xs" onClick={() => toggleMySubscription(s.id)}>{s.status === 'Paused' ? 'Resume plan' : 'Pause plan'}</button><button className="btn-ghost !py-2 !text-xs" onClick={() => navigate('/customer/tiffin')}>Change plan</button><span className="ml-auto text-sm font-extrabold text-chaskaa-600">{inr(s.price)}</span></div>
+          </div>
         </div>
       ))}</div>
     </div>
