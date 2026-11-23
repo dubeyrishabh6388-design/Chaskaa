@@ -7,12 +7,12 @@ export default {
         /* Crimson family sampled from the reference dashboard (#B00428 primary,
            #51010E sidebar). Kept as the brand "chaskaa" scale. */
         chaskaa: {
-          50: '#fdf2f4',
-          100: '#fce3e8',
-          200: '#f9c7d0',
-          300: '#f295a6',
-          400: '#e45a72',
-          500: '#cc1f3f',
+          50: '#fde6ea',
+          100: '#fbcfd8',
+          200: '#f7aebd',
+          300: '#f0859b',
+          400: '#e2526e',
+          500: '#cb1c3c',
           600: '#b00528',
           700: '#94031f',
           800: '#760219',

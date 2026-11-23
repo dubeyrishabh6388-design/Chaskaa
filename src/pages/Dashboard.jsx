@@ -62,10 +62,13 @@ export default function Dashboard() {
 
       {/* KPI row */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {dashboardStats.map((s, i) => (
-          <StatCard key={s.key} {...s} accent={['red', 'amber', 'purple', 'green'][i]}
-            onClick={() => navigate(['/orders', '/subscriptions', '/users', '/payments'][i])} />
-        ))}
+        {dashboardStats.map((s, i) => {
+          const { key, ...stat } = s;
+          return (
+            <StatCard key={key} {...stat} accent={['red', 'amber', 'purple', 'green'][i]}
+              onClick={() => navigate(['/orders', '/subscriptions', '/users', '/payments'][i])} />
+          );
+        })}
       </div>
 
       {/* Chart + pipeline */}
